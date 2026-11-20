@@ -3,7 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Flame, Zap, RotateCcw, ArrowRight, ArrowLeft, Coffee, Award } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { asset } from '../utils/assets';
-import { FlowerIcon, FloralCornerOrnament } from './FloralAccents';
+import {
+  FlowerIcon,
+  FloralCornerOrnament,
+  DaisyFlower,
+  ChocolateBarIcon,
+  TeddyBearIcon,
+  SkybloomBranchDecoration,
+  SkybloomLeftBranchDecoration,
+  CloudClusterBackdrop,
+  FlowerBouquetBadge,
+} from './FloralAccents';
 
 interface LoveMeterProps {
   onNextPage: () => void;
@@ -43,20 +53,20 @@ const CuteRomanticHeart: React.FC<{ size?: number; className?: string }> = ({
 );
 
 const FUNNY_MILESTONES = [
-  { min: 1000, label: 'SUPORTER BELAJAR #1 DARI JAUH', desc: 'Kapan pun Anggi pusing tugas atau ujian, Abg siap nemenin call atau chat sampai tenang.', icon: Award },
-  { min: 750, label: 'TEMAN CERITA VIRTUAL TERBAIK', desc: 'Walau belum ketemu langsung, ruang obrolan kita selalu jadi tempat paling nyaman.', icon: Flame },
-  { min: 500, label: 'PENDENGAR SETIA SETIAP HARI', desc: 'Siap dengerin Anggi latian hapalan dan keluh kesah seharian biar beban terasa ringan.', icon: Coffee },
-  { min: 300, label: 'PERHATIAN & DOA TANPA PUTUS', desc: 'Selalu doain kelancaran belajar Anggi dan siap kirim moodbooster kapan pun.', icon: Zap },
+  { min: 1000, label: 'PELUK BONEKA & COKELAT UNLIMITED', desc: 'Pelukan virtual terhangat, boneka penjaga, dan pasokan cokelat manis sepuasnya buat Nisaa yang lagi lelah kuliah.', icon: Award },
+  { min: 750, label: 'COKELAT MOODBOOSTER & TEMAN CALL', desc: 'Kapan pun Nisaa pusing tugas kampus, Abg siap temenin call sambil ngemil cokelat.', icon: Flame },
+  { min: 500, label: 'BUNGA PENYEGAR & PENDENGAR SETIA', desc: 'Siap dengerin curhat capeknya seharian biar senyum manis Nisaa balik cerah lagi.', icon: Coffee },
+  { min: 300, label: 'PERHATIAN & DOA TANPA PUTUS', desc: 'Selalu doain kelancaran kuliah Nisaa dan siap support kapan pun.', icon: Zap },
   { min: 100, label: 'SALING KABAR & SALING DUKUNG', desc: 'Saling bertukar kabar dan saling semangatin walau dipisahkan jarak.', icon: Heart },
 ];
 
 const POPUP_TEXTS = [
-  '🌸 Semangat Hapalan!',
-  '✨ Anggi Pasti Bisa',
-  '🌷 Nemenin Dari Jauh',
-  '💖 Istirahat Dulu Sayang',
-  '🌺 Bunga Favorit Abg',
-  '💐 Sukses Ujiannya!',
+  '🌸 Semangat Kuliah!',
+  '🍫 Cokelat Manis Buatmu',
+  '🧸 Peluk Boneka Abg',
+  '💖 Senyum Candu Nisaa',
+  '🌷 Rehat Dulu Sayang',
+  '✨ Nisaa Pasti Bisa',
 ];
 
 export const LoveMeter: React.FC<LoveMeterProps> = ({
@@ -143,29 +153,40 @@ export const LoveMeter: React.FC<LoveMeterProps> = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="p-6 sm:p-7 rounded-[32px] bg-white/95 backdrop-blur-xl border border-[#E8DCF8] shadow-[0_20px_50px_rgba(155,111,228,0.15)] space-y-6 relative overflow-hidden text-center"
+          className="p-6 sm:p-7 rounded-[36px] bg-white/95 backdrop-blur-xl border border-[#CFE9FF] shadow-[0_20px_50px_rgba(43,108,176,0.12)] space-y-6 relative overflow-hidden text-center"
         >
+          {/* Floral Branch in Top Corner behind content */}
+          <SkybloomBranchDecoration opacity={0.65} />
+
           {/* Floral Corner Ornaments */}
           <FloralCornerOrnament position="top-right" />
           <FloralCornerOrnament position="bottom-left" />
 
           {/* Heading */}
           <div className="space-y-1.5">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+              <span className="text-[11px] uppercase tracking-[0.2em] font-extrabold text-[#2B6CB0]">
+                METER CINTA & PERHATIAN
+              </span>
+              <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+            </div>
+
             <div className="flex items-center justify-between">
-              <div className="inline-flex items-center gap-1.5 text-2xl sm:text-3xl font-black tracking-tight text-[#28163E] leading-tight">
-                <FlowerIcon size={22} petalColor="#9B6FE4" />
-                <span>Tingkat Perhatian Abg</span>
+              <div className="inline-flex items-center gap-1.5 text-2xl sm:text-3xl font-serif font-bold tracking-tight text-[#1A4D80] leading-tight">
+                <DaisyFlower size={24} />
+                <span>Porsi Perhatian Buat Nisaa</span>
               </div>
               <button
                 onClick={handleResetAttempt}
                 title="Coba Kurangi"
-                className="p-1.5 rounded-full text-[#8E76A8] hover:text-[#9B6FE4] hover:bg-[#F5F0FB] transition-colors cursor-pointer shrink-0"
+                className="p-1.5 rounded-full text-[#6D3F33] hover:text-[#2B6CB0] hover:bg-[#EAF4FE] transition-colors cursor-pointer shrink-0"
               >
                 <RotateCcw size={14} />
               </button>
             </div>
-            <p className="text-sm sm:text-base text-[#5C4478]">
-              Tekan tombol bunga hati di bawah buat nentuin seberapa banyak perhatian yang Anggi mau dari Abg!
+            <p className="text-sm sm:text-base text-[#4A6482]">
+              Tekan tombol bunga hati di bawah buat nentuin seberapa banyak perhatian yang Nisaa mau dari Abg saat lagi capek kuliah!
             </p>
           </div>
 
@@ -176,7 +197,7 @@ export const LoveMeter: React.FC<LoveMeterProps> = ({
               initial={{ scale: 1.15 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              className="text-5xl sm:text-6xl font-black bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] bg-clip-text text-transparent tracking-tight"
+              className="text-5xl sm:text-6xl font-black bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#E06287] bg-clip-text text-transparent tracking-tight font-serif"
             >
               {loveScore}%
             </motion.div>
@@ -186,36 +207,36 @@ export const LoveMeter: React.FC<LoveMeterProps> = ({
               key={currentMilestone.label}
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-3.5 rounded-2xl bg-gradient-to-r from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] space-y-1 text-center"
+              className="p-3.5 rounded-2xl bg-gradient-to-r from-[#F4F9FD] via-[#FFF5F8] to-[#FDF6EE] border border-[#CFE9FF] space-y-1 text-center"
             >
-              <div className="inline-flex items-center gap-1.5 text-sm font-bold text-[#7F4CD1]">
+              <div className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#2B6CB0]">
                 <MilestoneIcon size={16} />
                 <span>{currentMilestone.label}</span>
               </div>
-              <p className="text-base text-[#5C4478] leading-snug">
+              <p className="text-sm sm:text-base text-[#4A6482] leading-snug">
                 "{currentMilestone.desc}"
               </p>
             </motion.div>
           </div>
 
           {/* Animated Progress Meter */}
-          <div className="w-full bg-[#F5F0FB] h-3.5 rounded-full overflow-hidden p-0.5 border border-[#EAE1FA]">
+          <div className="w-full bg-[#EAF4FE] h-3.5 rounded-full overflow-hidden p-0.5 border border-[#CFE9FF]">
             <motion.div
-              className="h-full bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] rounded-full"
+              className="h-full bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#E06287] rounded-full"
               initial={{ width: '10%' }}
               animate={{ width: `${progressPercent}%` }}
               transition={{ type: 'spring', stiffness: 220, damping: 20 }}
             />
           </div>
 
-          {/* Central Interactive Heart Pump Button with balanced dainty proportions */}
+          {/* Central Interactive Heart Pump Button */}
           <div className="pt-2 relative flex flex-col items-center justify-center gap-2">
             <motion.button
               whileTap={{ scale: 0.92 }}
               whileHover={{ scale: 1.05 }}
               onClick={handleHeartPump}
-              aria-label="Pompa Porsi Manja Anggi"
-              className="relative w-[62px] h-[62px] min-w-[62px] min-h-[62px] rounded-full bg-gradient-to-tr from-[#9B6FE4] via-[#B899EE] to-[#D870B8] text-white flex items-center justify-center cursor-pointer select-none shadow-[0_8px_20px_rgba(155,111,228,0.38)] transition-transform"
+              aria-label="Pompa Porsi Manja Nisaa"
+              className="relative w-[62px] h-[62px] min-w-[62px] min-h-[62px] rounded-full bg-gradient-to-tr from-[#2B6CB0] via-[#5DA9FF] to-[#E06287] text-white flex items-center justify-center cursor-pointer select-none shadow-[0_10px_25px_rgba(43,108,176,0.3)] transition-transform"
             >
               <div className="flex items-center justify-center pointer-events-none">
                 <CuteRomanticHeart size={20} />
@@ -247,25 +268,25 @@ export const LoveMeter: React.FC<LoveMeterProps> = ({
             </p>
           </div>
 
-          {/* Couple Vignette: Anggi Anisa Lintang & Abg */}
+          {/* Couple Vignette: Nisaa Cintakuu & Abg */}
           <div className="pt-1 flex flex-col items-center justify-center gap-3">
             <div className="p-3 bg-gradient-to-r from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] rounded-2xl flex items-center justify-between gap-3 w-full max-w-[340px] border border-[#EAE1FA]">
-              {/* Anggi Avatar */}
+              {/* Nisaa Avatar */}
               <div className="flex items-center gap-2">
                 <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#28163E] shrink-0 border-2 border-[#9B6FE4]/50 shadow-sm">
                   <img
-                    src={asset('/img/PHOTO-2026-11-18-19-32-51.jpg')}
-                    alt="Anggi Anisa Lintang"
+                    src={asset('/img/PHOTO-2026-11-20-08 copy.jpg')}
+                    alt="Nisaa Cintakuu"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="text-left">
                   <div className="text-[13px] font-bold text-[#28163E] truncate max-w-[110px]">
-                    Anggi Anisa L.
+                    Nisaa Cintakuu
                   </div>
                   <div className="text-[12px] text-[#7F4CD1] leading-tight flex items-center gap-0.5">
                     <FlowerIcon size={10} petalColor="#D870B8" />
-                    <span>Bunga Manis</span>
+                    <span>Senyum Candu</span>
                   </div>
                 </div>
               </div>
@@ -301,7 +322,7 @@ export const LoveMeter: React.FC<LoveMeterProps> = ({
 
             <div className="flex items-center justify-center gap-2">
               <span className="text-[13px] text-[#8E76A8]">
-                {clickCount > 0 ? 'Semangat terus buat Anggi tersayang! 🌸' : 'Ketuk hati untuk menaikkan skor!'}
+                {clickCount > 0 ? 'Semangat terus buat Nisaa cintakuu! Sumpah senyummu bikin candu 🌸' : 'Ketuk hati untuk menaikkan skor!'}
               </span>
               {loveScore < 1000 && (
                 <button
@@ -322,18 +343,18 @@ export const LoveMeter: React.FC<LoveMeterProps> = ({
         <button
           onClick={onPrevPage}
           aria-label="Halaman Sebelumnya"
-          className="w-14 h-14 min-w-[54px] min-h-[54px] rounded-full bg-white/90 backdrop-blur-md border border-[#E8DCF8] shadow-sm flex items-center justify-center text-[#28163E] shrink-0 cursor-pointer hover:bg-[#E8DCF8]/30 transition-colors"
+          className="w-13 h-13 min-w-[50px] min-h-[50px] rounded-full bg-white/95 backdrop-blur-md border border-[#CFE9FF] shadow-xs flex items-center justify-center text-[#1A4D80] shrink-0 cursor-pointer hover:bg-[#EAF4FE] transition-colors"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={19} />
         </button>
 
         <motion.button
           whileTap={{ scale: 0.96 }}
           whileHover={{ scale: 1.02 }}
           onClick={onNextPage}
-          className="flex-1 py-4 px-6 bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white rounded-full font-bold text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(155,111,228,0.32)] transition-opacity hover:opacity-95"
+          className="flex-1 py-3.5 px-6 bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(43,108,176,0.28)] transition-opacity hover:opacity-95"
         >
-          <span>Buka Galeri Foto Anggi</span>
+          <span>Buka Galeri Foto Nisaa</span>
           <ArrowRight size={18} className="text-[#FCEEF6]" />
         </motion.button>
       </div>

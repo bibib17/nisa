@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta name="theme-color" content="#F5F0FB" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <link rel="icon" type="image/svg+xml" href="./assets/pattern-romantic-DgCeXk0V.svg" />
-    <title>Anggi's Sweetest Corner - For Anggi Anisa Lintang from Abg</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="./assets/main-CfxVyGSg.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/main-BTLJPmvg.css">
-  </head>
-  <body class="bg-[#F5F0FB] text-[#28163E] antialiased selection:bg-[#E8DCF8] selection:text-[#28163E]">
-    <div id="root"></div>
-  </body>
-</html>
+<?php
+// Always serve the latest compiled SPA index.html
+if (file_exists(__DIR__ . '/index.html')) {
+    include __DIR__ . '/index.html';
+} elseif (file_exists(__DIR__ . '/dist/index.html')) {
+    include __DIR__ . '/dist/index.html';
+} else {
+    echo "Web app is ready. Please refresh.";
+}
+?>

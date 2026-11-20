@@ -7,6 +7,27 @@ export default {
   theme: {
     extend: {
       colors: {
+        sky: {
+          deep: '#1A4D80',
+          primary: '#2B6CB0',
+          vibrant: '#5DA9FF',
+          soft: '#CFE9FF',
+          light: '#EAF4FE',
+          tint: '#F5FAFF',
+        },
+        choco: {
+          dark: '#3A201B',
+          rich: '#4A2A23',
+          warm: '#6D3F33',
+          mocha: '#8A5343',
+          caramel: '#C88E58',
+          cream: '#FBF5EE',
+        },
+        meadow: {
+          leaf: '#A8C97A',
+          stem: '#80A854',
+          tint: '#F3F9EA',
+        },
         choc: {
           dark: '#28163E',       // Transformed to Deep Royal Violet / Plum
           milk: '#5C4478',       // Rich muted amethyst
@@ -50,7 +71,9 @@ export default {
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+        script: ['"Dancing Script"', 'cursive'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
       }
     },
   },

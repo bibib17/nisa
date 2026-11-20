@@ -76,27 +76,27 @@ export const FilmstripWidget: React.FC<FilmstripWidgetProps> = ({
   const isCurrentLiked = !!likedMap[currentItem.id];
 
   return (
-    <div className="relative w-full max-w-[340px] sm:max-w-[320px] mx-auto p-3 sm:p-3.5 bg-white/95 backdrop-blur-md rounded-3xl border border-[#E8DCF8] shadow-[0_8px_24px_rgba(155,111,228,0.12)] select-none space-y-2">
+    <div className="relative w-full max-w-[340px] sm:max-w-[320px] mx-auto p-3 sm:p-3.5 bg-white/95 backdrop-blur-md rounded-3xl border border-[#CFE9FF] shadow-[0_8px_24px_rgba(43,108,176,0.1)] select-none space-y-2">
       {/* Header: Date, Counter & Live Time */}
-      <div className="flex items-center justify-between bg-gradient-to-r from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl border border-[#EAE1FA]/70">
-        <div className="flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#6434AD]">
-          <Clock size={13} className="text-[#9B6FE4]" />
+      <div className="flex items-center justify-between bg-gradient-to-r from-[#F4F9FD] via-[#FFF5F8] to-[#FDF6EE] px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-2xl border border-[#CFE9FF]/70">
+        <div className="flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#2B6CB0]">
+          <Clock size={13} className="text-[#5DA9FF]" />
           <span>{currentItem.date}</span>
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2">
-          <span className="text-[10px] font-bold text-[#7F4CD1] bg-white/90 px-1.5 py-0.5 rounded-md border border-[#EAE1FA]">
+          <span className="text-[10px] font-bold text-[#2B6CB0] bg-white/95 px-1.5 py-0.5 rounded-md border border-[#CFE9FF]">
             {safeIdx + 1}/{HERO_FILMSTRIP.length}
           </span>
-          <span className="text-xs sm:text-[13px] font-bold text-[#28163E]">
+          <span className="text-xs sm:text-[13px] font-bold text-[#1A4D80]">
             {currentItem.time}
           </span>
           <div className="relative">
             <button
               onClick={handleLikeMoment}
               aria-label="Suka Momen Ini"
-              className="p-1 rounded-full text-[#9B6FE4] cursor-pointer hover:bg-white active:scale-90 transition-transform"
+              className="p-1 rounded-full text-[#E06287] cursor-pointer hover:bg-white active:scale-90 transition-transform"
             >
-              <Heart size={14} fill={isCurrentLiked ? '#9B6FE4' : 'transparent'} />
+              <Heart size={14} fill={isCurrentLiked ? '#E06287' : 'transparent'} />
             </button>
             <AnimatePresence>
               {floatingHeart && (
@@ -105,9 +105,9 @@ export const FilmstripWidget: React.FC<FilmstripWidgetProps> = ({
                   animate={{ opacity: 0, y: -20, scale: 1.3 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.65, ease: 'easeOut' }}
-                  className="absolute -top-3 left-1 pointer-events-none text-[#D870B8]"
+                  className="absolute -top-3 left-1 pointer-events-none text-[#E06287]"
                 >
-                  <Heart size={13} fill="#D870B8" />
+                  <Heart size={13} fill="#E06287" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -120,7 +120,7 @@ export const FilmstripWidget: React.FC<FilmstripWidgetProps> = ({
         <button
           onClick={prevSlide}
           aria-label="Momen Sebelumnya"
-          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[#6434AD] bg-[#F5F0FB] hover:bg-[#E8DCF8] active:scale-90 transition-all cursor-pointer shrink-0 border border-[#EAE1FA]/80 shadow-xs"
+          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[#2B6CB0] bg-[#EAF4FE] hover:bg-[#CFE9FF] active:scale-90 transition-all cursor-pointer shrink-0 border border-[#CFE9FF] shadow-xs"
         >
           <ChevronLeft size={16} />
         </button>
@@ -139,7 +139,7 @@ export const FilmstripWidget: React.FC<FilmstripWidgetProps> = ({
                 onClick={() => handleSelect(idx)}
                 className={`relative w-[52px] h-[52px] min-w-[52px] min-h-[52px] sm:w-[58px] sm:h-[58px] sm:min-w-[58px] sm:min-h-[58px] rounded-2xl overflow-hidden cursor-pointer transition-all duration-200 shrink-0 ${
                   isSelected
-                    ? 'ring-2 ring-[#9B6FE4] ring-offset-2 ring-offset-white scale-105 shadow-[0_4px_12px_rgba(155,111,228,0.28)] opacity-100'
+                    ? 'ring-2 ring-[#2B6CB0] ring-offset-2 ring-offset-white scale-105 shadow-[0_4px_12px_rgba(43,108,176,0.28)] opacity-100'
                     : 'opacity-55 hover:opacity-85 hover:scale-95'
                 }`}
               >

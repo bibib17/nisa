@@ -21,11 +21,11 @@ html {
 body {
   margin: 0;
   padding: 0;
-  background-color: #F5F0FB;
-  background-image: url('./assets/pattern-romantic.svg');
+  background-color: #EAF4FE;
+  background-image: radial-gradient(circle at 50% 0%, rgba(207, 233, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%), url('./assets/pattern-romantic.svg');
   background-repeat: repeat;
-  background-size: 70px 70px;
-  color: #28163E;
+  background-size: auto, 70px 70px;
+  color: #1A4D80;
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   font-size: 16px;
   overflow-x: hidden;
@@ -36,10 +36,17 @@ body {
 }
 
 .bg-romantic-pattern {
-  background-color: #F5F0FB;
-  background-image: url('./assets/pattern-romantic.svg');
-  background-repeat: repeat;
-  background-size: 70px 70px;
+  background: linear-gradient(180deg, #A8D8FE 0%, #CEE8FE 18%, #EBF4FE 40%, #F8FBFE 70%, #FFF7FA 100%);
+  background-attachment: fixed;
+}
+
+/* Skybloom Clean Floating Cards */
+.skybloom-card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(207, 233, 255, 0.85);
+  box-shadow: 0 20px 50px -10px rgba(43, 108, 176, 0.16), 0 8px 20px rgba(216, 112, 184, 0.07);
 }
 
 /* Glassmorphism Dreamy Cards from reference design */

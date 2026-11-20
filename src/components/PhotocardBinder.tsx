@@ -1,9 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, RotateCw, Volume2, VolumeX, Play, Pause, X, ChevronLeft, ChevronRight, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
 import { ANGGI_SOLO_CARDS } from '../data/content';
 import { PhotocardItem } from '../types';
-import { FlowerIcon, SakuraBlossom } from './FloralAccents';
+import {
+  FlowerIcon,
+  SakuraBlossom,
+  DaisyFlower,
+  ChocolateBarIcon,
+  TeddyBearIcon,
+  SkybloomBranchDecoration,
+  SkybloomLeftBranchDecoration,
+  CornerFloralBranch,
+  CloudClusterBackdrop,
+  FlowerBouquetBadge,
+} from './FloralAccents';
 
 interface PhotocardBinderProps {
   onNextPage: () => void;
@@ -24,7 +36,46 @@ export const PhotocardBinder: React.FC<PhotocardBinderProps> = ({
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [modalFlipped, setModalFlipped] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll while modal is active
+  useEffect(() => {
+    if (selectedCard) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedCard]);
+
+  // Keyboard navigation for modal
+  useEffect(() => {
+    if (!selectedCard) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        const currentIndex = ANGGI_SOLO_CARDS.findIndex((c) => c.id === selectedCard.id);
+        const nextIndex = (currentIndex + 1) % ANGGI_SOLO_CARDS.length;
+        setSelectedCard(ANGGI_SOLO_CARDS[nextIndex]);
+        setModalFlipped(false);
+      } else if (e.key === 'ArrowLeft') {
+        const currentIndex = ANGGI_SOLO_CARDS.findIndex((c) => c.id === selectedCard.id);
+        const prevIndex = (currentIndex - 1 + ANGGI_SOLO_CARDS.length) % ANGGI_SOLO_CARDS.length;
+        setSelectedCard(ANGGI_SOLO_CARDS[prevIndex]);
+        setModalFlipped(false);
+      } else if (e.key === 'Escape') {
+        setSelectedCard(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedCard]);
 
   const toggleCardFlip = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -97,24 +148,35 @@ export const PhotocardBinder: React.FC<PhotocardBinderProps> = ({
   };
 
   return (
-    <div className="relative w-full min-h-[750px] py-8 px-4 flex flex-col justify-between select-none">
-      <div className="space-y-6">
+    <div className="relative w-full min-h-[750px] py-8 px-4 flex flex-col justify-between select-none overflow-hidden">
+      {/* Decorative Skybloom White Daisy Branch in Background Top Corner */}
+      <SkybloomBranchDecoration opacity={0.65} />
+
+      <div className="space-y-6 relative z-10">
         {/* Header Bagian 1 */}
-        <div className="space-y-1.5 px-1">
+        <div className="space-y-2 px-1">
+          <div className="flex items-center gap-2">
+            <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-extrabold text-[#2B6CB0]">
+              DOKUMENTASI MANIS NISAA
+            </span>
+            <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+          </div>
+
           <div className="flex items-center justify-between">
             <div className="inline-flex items-center gap-2">
-              <FlowerIcon size={24} petalColor="#9B6FE4" />
-              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[#28163E] leading-tight">
-                Tentang Anggi Anisa Lintang
+              <DaisyFlower size={24} />
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#1A4D80] leading-tight">
+                Senyum Candu & Koleksi
               </h2>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/85 backdrop-blur-md rounded-full text-[13px] font-bold text-[#7F4CD1] border border-[#E8DCF8] shadow-sm shrink-0">
-              <Heart size={13} fill="#9B6FE4" className="text-[#9B6FE4]" />
+            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-[#2B6CB0] border border-[#CFE9FF] shadow-xs shrink-0">
+              <Heart size={13} fill="#E06287" className="text-[#E06287]" />
               <span>{totalLikes} Suka</span>
             </div>
           </div>
-          <p className="text-base text-[#5C4478] leading-relaxed">
-            Kumpulan foto dan video manis kiriman Anggi yang selalu jadi penyemangat hari-hari Abg dari jauh.
+          <p className="text-sm sm:text-base text-[#4A6482] leading-relaxed">
+            Kumpulan foto dan video manis kiriman Nisaa dengan rasio  penuh. Senyumnya beneran bikin candu banget dan selalu jadi penyemangat hari-hari Abg dari jauh! 💕
           </p>
         </div>
 
@@ -135,10 +197,10 @@ export const PhotocardBinder: React.FC<PhotocardBinderProps> = ({
                 {/* Photocard Front / Back */}
                 {!isFlipped ? (
                   <div className="relative w-full h-full flex flex-col justify-between">
-                    {/* Media Display - Locked 181 x 247.31 Ratio */}
+                    {/* Media Display - Locked  (720x1279) Ratio */}
                     <div
-                      className="relative w-full aspect-[181/247.31] rounded-[18px] overflow-hidden bg-[#28163E] shrink-0"
-                      style={{ aspectRatio: '181 / 247.31' }}
+                      className="relative w-full aspect-[9/16] rounded-[18px] overflow-hidden bg-[#28163E] shrink-0"
+                      style={{ aspectRatio: '9 / 16' }}
                     >
                       {card.type === 'video' ? (
                         <video
@@ -219,12 +281,13 @@ export const PhotocardBinder: React.FC<PhotocardBinderProps> = ({
                   /* Photocard Back Side */
                   <div
                     onClick={(e) => toggleCardFlip(card.id, e)}
-                    className="relative w-full h-full rounded-[18px] bg-gradient-to-br from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] p-3 flex flex-col justify-between text-center overflow-hidden"
+                    className="relative w-full aspect-[9/16] rounded-[18px] bg-gradient-to-br from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] p-3 flex flex-col justify-between text-center overflow-hidden"
+                    style={{ aspectRatio: '9 / 16' }}
                   >
                     <div className="space-y-0.5 shrink-0">
                       <div className="inline-flex items-center gap-1 text-[11px] sm:text-[12px] font-bold text-[#7F4CD1]">
                         <FlowerIcon size={12} petalColor="#D870B8" />
-                        <span>KARTU RESMI ANGGI</span>
+                        <span>KARTU RESMI NISAA</span>
                       </div>
                       <div className="text-[11px] sm:text-[12px] font-bold text-[#8E76A8]">
                         NO. {card.cardNo} / {ANGGI_SOLO_CARDS.length}
@@ -254,168 +317,187 @@ export const PhotocardBinder: React.FC<PhotocardBinderProps> = ({
         <button
           onClick={onPrevPage}
           aria-label="Halaman Sebelumnya"
-          className="w-14 h-14 min-w-[54px] min-h-[54px] rounded-full bg-white/90 backdrop-blur-md border border-[#E8DCF8] shadow-sm flex items-center justify-center text-[#28163E] shrink-0 cursor-pointer hover:bg-[#E8DCF8]/30 transition-colors"
+          className="w-13 h-13 min-w-[50px] min-h-[50px] rounded-full bg-white/95 backdrop-blur-md border border-[#CFE9FF] shadow-xs flex items-center justify-center text-[#1A4D80] shrink-0 cursor-pointer hover:bg-[#EAF4FE] transition-colors"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={19} />
         </button>
 
         <motion.button
           whileTap={{ scale: 0.96 }}
           whileHover={{ scale: 1.02 }}
           onClick={onNextPage}
-          className="flex-1 py-4 px-6 bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white rounded-full font-bold text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(155,111,228,0.32)] transition-opacity hover:opacity-95"
+          className="flex-1 py-3.5 px-6 bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(43,108,176,0.28)] transition-opacity hover:opacity-95"
         >
-          <span>Lanjut ke Momen Berdua</span>
+          <span>Lanjut ke Doa & Semangat Kuliah</span>
           <ArrowRight size={18} className="text-[#FCEEF6]" />
         </motion.button>
       </div>
 
-      {/* Fullscreen Modal View */}
-      <AnimatePresence>
-        {selectedCard && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
-            onClick={() => setSelectedCard(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0, y: 15 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.92, opacity: 0, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-[370px] bg-white/95 backdrop-blur-2xl rounded-[32px] p-4.5 space-y-3.5 border border-[#E8DCF8] shadow-[0_25px_60px_rgba(155,111,228,0.25)] overflow-hidden"
-            >
-              {/* Modal Top Nav Bar */}
-              <div className="flex items-center justify-between pb-1">
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={prevModalCard}
-                    aria-label="Sebelumnya"
-                    className="p-1.5 rounded-full text-[#6434AD] hover:bg-[#F5F0FB] transition-colors cursor-pointer"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <span className="text-sm font-bold text-[#28163E]">
-                    {selectedCard.cardNo} / {ANGGI_SOLO_CARDS.length}
-                  </span>
-                  <button
-                    onClick={nextModalCard}
-                    aria-label="Berikutnya"
-                    className="p-1.5 rounded-full text-[#6434AD] hover:bg-[#F5F0FB] transition-colors cursor-pointer"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-
-                <button
-                  onClick={() => setSelectedCard(null)}
-                  aria-label="Tutup Modal"
-                  className="p-1.5 rounded-full text-[#8E76A8] hover:text-[#28163E] hover:bg-[#F5F0FB] transition-colors cursor-pointer"
+      {/* Fullscreen Modal View via React Portal to document.body */}
+      {mounted &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {selectedCard && (
+              <motion.div
+                key="photocard-modal-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md select-none"
+                onClick={() => setSelectedCard(null)}
+              >
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0, y: 15 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 15 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative bg-white/95 backdrop-blur-2xl rounded-[28px] sm:rounded-[32px] border border-[#CFE9FF] shadow-[0_25px_60px_rgba(43,108,176,0.3)] flex flex-col items-center overflow-hidden max-h-[92vh] max-w-[94vw]"
                 >
-                  <X size={20} />
-                </button>
-              </div>
+                  {/* Modal Top Nav Bar */}
+                  <div className="w-full px-4 pt-3.5 pb-2.5 flex items-center justify-between shrink-0 border-b border-[#CFE9FF]/50 bg-white/75 backdrop-blur-md gap-3">
+                    {/* Counter Pill */}
+                    <div className="flex items-center gap-1 bg-[#F4F9FD] px-2 py-1 rounded-full border border-[#CFE9FF] shadow-xs">
+                      <button
+                        onClick={prevModalCard}
+                        aria-label="Sebelumnya"
+                        className="p-1 rounded-full text-[#2B6CB0] hover:bg-[#EAF4FE] transition-colors cursor-pointer"
+                      >
+                        <ChevronLeft size={16} />
+                      </button>
+                      <span className="text-xs font-bold text-[#1A4D80] px-1.5 whitespace-nowrap">
+                        {selectedCard.cardNo} / {ANGGI_SOLO_CARDS.length}
+                      </span>
+                      <button
+                        onClick={nextModalCard}
+                        aria-label="Berikutnya"
+                        className="p-1 rounded-full text-[#2B6CB0] hover:bg-[#EAF4FE] transition-colors cursor-pointer"
+                      >
+                        <ChevronRight size={16} />
+                      </button>
+                    </div>
 
-              {/* Modal Media Showcase */}
-              {!modalFlipped ? (
-                <div
-                  className="relative w-full aspect-[181/247.31] rounded-[24px] overflow-hidden bg-[#28163E] border border-[#E8DCF8]"
-                  style={{ aspectRatio: '181 / 247.31' }}
-                >
-                  {selectedCard.type === 'video' ? (
-                    <>
-                      <video
-                        ref={videoRef}
-                        src={selectedCard.src}
-                        playsInline
-                        webkit-playsinline="true"
-                        muted={isMuted}
-                        autoPlay
-                        loop
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                        <button
-                          onClick={toggleModalPlay}
-                          aria-label="Putar atau Jeda"
-                          className="p-2.5 rounded-full bg-[#28163E]/80 backdrop-blur-md text-white cursor-pointer"
-                        >
-                          {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-                        </button>
-                        <button
-                          onClick={toggleModalMute}
-                          aria-label="Bunyikan atau Bisukan"
-                          className="p-2.5 rounded-full bg-[#28163E]/80 backdrop-blur-md text-white cursor-pointer"
-                        >
-                          {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                        </button>
+                    {/* Close Button */}
+                    <button
+                      onClick={() => setSelectedCard(null)}
+                      aria-label="Tutup Modal"
+                      className="w-8 h-8 rounded-full bg-[#F4F9FD] hover:bg-[#EAF4FE] text-[#1A4D80] hover:text-[#2B6CB0] border border-[#CFE9FF] flex items-center justify-center transition-colors cursor-pointer shadow-xs shrink-0"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+
+                  {/* Modal Media Showcase Container */}
+                  <div className="p-3 sm:p-3.5 flex items-center justify-center">
+                    {!modalFlipped ? (
+                      <div
+                        className="relative rounded-[20px] overflow-hidden bg-[#1A4D80] border border-[#CFE9FF] shadow-sm flex items-center justify-center"
+                        style={{
+                          height: 'min(48vh, 420px)',
+                          width: 'calc(min(48vh, 420px) * 9 / 16)',
+                          aspectRatio: '9 / 16',
+                        }}
+                      >
+                        {selectedCard.type === 'video' ? (
+                          <>
+                            <video
+                              ref={videoRef}
+                              src={selectedCard.src}
+                              playsInline
+                              webkit-playsinline="true"
+                              muted={isMuted}
+                              autoPlay
+                              loop
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                              <button
+                                onClick={toggleModalPlay}
+                                aria-label="Putar atau Jeda"
+                                className="p-2 rounded-full bg-[#1A4D80]/85 backdrop-blur-md text-white cursor-pointer hover:bg-[#2B6CB0] transition-colors"
+                              >
+                                {isPlaying ? <Pause size={15} /> : <Play size={15} />}
+                              </button>
+                              <button
+                                onClick={toggleModalMute}
+                                aria-label="Bunyikan atau Bisukan"
+                                className="p-2 rounded-full bg-[#1A4D80]/85 backdrop-blur-md text-white cursor-pointer hover:bg-[#2B6CB0] transition-colors"
+                              >
+                                {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <img
+                            src={selectedCard.src}
+                            alt={selectedCard.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+
+                        <div className="absolute top-2.5 left-2.5 px-2.5 py-1 bg-[#1A4D80]/85 backdrop-blur-md text-white text-[11px] font-bold rounded-full border border-white/20 whitespace-nowrap">
+                          PC #{selectedCard.cardNo} • {selectedCard.tag}
+                        </div>
                       </div>
-                    </>
-                  ) : (
-                    <img
-                      src={selectedCard.src}
-                      alt={selectedCard.title}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
+                    ) : (
+                      /* Modal Back Side */
+                      <div
+                        className="relative rounded-[20px] bg-gradient-to-br from-[#F4F9FD] via-[#FFF5F8] to-[#FDF6EE] border border-[#CFE9FF] p-4 sm:p-5 flex flex-col justify-between text-center shadow-sm"
+                        style={{
+                          height: 'min(48vh, 420px)',
+                          width: 'calc(min(48vh, 420px) * 9 / 16)',
+                          aspectRatio: '9 / 16',
+                        }}
+                      >
+                        <div className="space-y-1">
+                          <div className="inline-flex items-center gap-1 text-[11px] font-bold text-[#2B6CB0]">
+                            <DaisyFlower size={14} />
+                            <span>OFFICIAL PHOTOCARD NISAA</span>
+                          </div>
+                          <div className="text-[11px] font-bold text-[#6D3F33]">
+                            NO. {selectedCard.cardNo} / {ANGGI_SOLO_CARDS.length}
+                          </div>
+                        </div>
 
-                  <div className="absolute top-3 left-3 px-3 py-1 bg-[#28163E]/85 backdrop-blur-md text-[#FFFFFF] text-[13px] font-bold rounded-full">
-                    PC #{selectedCard.cardNo} • {selectedCard.tag}
+                        <div className="my-auto py-2">
+                          <p className="font-serif italic text-sm sm:text-base font-bold text-[#1A4D80] leading-relaxed">
+                            "{selectedCard.backNote}"
+                          </p>
+                        </div>
+
+                        <div className="pt-2 text-[10px] text-[#4A6482] flex items-center justify-center gap-1">
+                          <TeddyBearIcon size={13} />
+                          <span>Ditulis tulus oleh Abg buat Nisaa cintakuu</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ) : (
-                /* Modal Back Side */
-                <div
-                  className="relative w-full aspect-[181/247.31] rounded-[24px] bg-gradient-to-br from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] p-6 flex flex-col justify-between text-center"
-                  style={{ aspectRatio: '181 / 247.31' }}
-                >
-                  <div className="space-y-1">
-                    <div className="inline-flex items-center gap-1.5 text-sm font-bold text-[#7F4CD1]">
-                      <SakuraBlossom size={18} />
-                      <span>OFFICIAL PHOTOCARD ANGGI</span>
+
+                  {/* Modal Card Info & Flip Action */}
+                  <div className="w-full px-4 pt-2.5 pb-4 border-t border-[#CFE9FF]/50 bg-white/75 backdrop-blur-md space-y-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-serif text-sm sm:text-base font-bold text-[#1A4D80] truncate max-w-[160px] sm:max-w-[200px]">
+                        {selectedCard.title}
+                      </h3>
+                      <button
+                        onClick={() => setModalFlipped(!modalFlipped)}
+                        className="inline-flex items-center gap-1.5 py-1 px-3 rounded-full bg-[#EAF4FE] text-[#2B6CB0] border border-[#CFE9FF] text-xs font-bold cursor-pointer hover:bg-[#CFE9FF]/50 transition-colors shrink-0"
+                      >
+                        <RotateCw size={12} />
+                        <span>{modalFlipped ? 'Lihat Foto' : 'Balik Kartu'}</span>
+                      </button>
                     </div>
-                    <div className="text-[13px] font-bold text-[#8E76A8]">
-                      NO. {selectedCard.cardNo} / {ANGGI_SOLO_CARDS.length}
+                    <div className="text-[11px] text-[#6D3F33] font-medium truncate">
+                      {selectedCard.date} • Koleksi #{selectedCard.cardNo} dari {ANGGI_SOLO_CARDS.length}
                     </div>
                   </div>
-
-                  <div className="my-auto py-4">
-                    <p className="text-lg font-bold text-[#28163E] leading-relaxed">
-                      "{selectedCard.backNote}"
-                    </p>
-                  </div>
-
-                  <div className="pt-2 text-sm text-[#5C4478] flex items-center justify-center gap-1">
-                    <FlowerIcon size={12} petalColor="#D870B8" />
-                    <span>Ditulis tulus oleh Abg buat Anggi</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Modal Card Info & Flip Action */}
-              <div className="px-1 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-bold text-[#28163E]">
-                    {selectedCard.title}
-                  </h3>
-                  <button
-                    onClick={() => setModalFlipped(!modalFlipped)}
-                    className="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full bg-[#F5F0FB] text-[#7F4CD1] border border-[#EAE1FA] text-[13px] font-bold cursor-pointer hover:bg-[#E8DCF8]/50 transition-colors"
-                  >
-                    <RotateCw size={13} />
-                    <span>{modalFlipped ? 'Lihat Foto' : 'Balik Kartu'}</span>
-                  </button>
-                </div>
-                <div className="text-[13px] text-[#8E76A8]">
-                  {selectedCard.date} • Koleksi #{selectedCard.cardNo} dari {ANGGI_SOLO_CARDS.length}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </div>
   );
 };

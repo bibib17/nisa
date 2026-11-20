@@ -4,7 +4,15 @@ import { Heart, RotateCw, Sparkles, ArrowLeft, ArrowRight, BookOpen, GraduationC
 import confetti from 'canvas-confetti';
 import { COUPLE_CARDS } from '../data/content';
 import { PhotocardItem } from '../types';
-import { FlowerIcon, SakuraBlossom } from './FloralAccents';
+import {
+  FlowerIcon,
+  SakuraBlossom,
+  DaisyFlower,
+  ChocolateBarIcon,
+  TeddyBearIcon,
+  SkybloomBranchDecoration,
+  SkybloomLeftBranchDecoration,
+} from './FloralAccents';
 
 interface CoupleSectionProps {
   onNextPage: () => void;
@@ -12,12 +20,12 @@ interface CoupleSectionProps {
 }
 
 const STUDY_CHEERS = [
-  'Hapalan hari ini pasti lancar & nempel di kepala! Walau cuma bisa dukung dari jauh, doa Abg selalu ada buat Anggi 🌸📖',
-  'Ngerjain tugasnya satu per satu ya sayang. Jangan lupa istirahat mata dan minum air putih biar gak pusing ☕💧',
-  'Anggi itu pintar dan hebat! Kamu sudah belajar keras, percayalah hasil terbaik pasti nunggu kamu 🎓✨',
-  'Kalau otak udah mulai lelah atau jenuh belajar, call Abg yaa. Abg selalu siap dengerin keluh kesahmu 🫂💖',
-  'Jadikan ujian ini langkah awal yaa... kita memang belum pernah ketemu, tapi selesai ujian ini kita rayain bareng langsung! 🍨💐',
-  'Peluk virtual paling erat dari Abg buat nemenin Anggi belajar malam ini. Semangat terus cantiknya Abg! 🌷🥰',
+  'Kuliah hari ini lancar ya cintakuu! Abg kirimin cokelat manis & peluk boneka virtual biar gak capek 🍫🧸',
+  'Ngerjain tugas kuliahnya satu per satu ya sayang. Jangan lupa ngemil cokelat, minum air, dan peluk boneka kesayangan 🌸💧',
+  'Nisaa itu mahasiswi hebat! Kamu sudah berjuang keras, percayalah hasil terbaik pasti nunggu kamu 🎓✨',
+  'Sumpah senyum manis Nisaa di video bikin candu banget weh... bikin capek seharian langsung hilang seketika, pokoknya Abg suka banget! 🥰💖',
+  'Kalau otak udah mulai jenuh sama urusan kampus, langsung call Abg yaa. Abg selalu siap dengerin curhat Nisaa 🫂🧸',
+  'Peluk virtual paling hangat dari Abg buat Nisaa yang lagi capek kuliah malam ini. Semangat terus cintakuu tersayang! 🌷🍫',
 ];
 
 export const CoupleSection: React.FC<CoupleSectionProps> = ({
@@ -72,24 +80,35 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({
   };
 
   return (
-    <div className="relative w-full min-h-[750px] py-8 px-4 flex flex-col justify-between select-none">
-      <div className="space-y-6">
+    <div className="relative w-full min-h-[750px] py-8 px-4 flex flex-col justify-between select-none overflow-hidden">
+      {/* Decorative Skybloom White Daisy Branch in Background Top Corner */}
+      <SkybloomBranchDecoration opacity={0.65} />
+
+      <div className="space-y-6 relative z-10">
         {/* Header Bagian Penyemangat Ujian & Belajar */}
-        <div className="space-y-1.5 px-1">
+        <div className="space-y-2 px-1">
+          <div className="flex items-center gap-2">
+            <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-extrabold text-[#2B6CB0]">
+              SEMANGAT & DUKUNGAN KULIAH
+            </span>
+            <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+          </div>
+
           <div className="flex items-center justify-between">
             <div className="inline-flex items-center gap-2">
-              <FlowerIcon size={22} petalColor="#D870B8" />
-              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[#28163E] leading-tight">
-                Penyemangat Ujian Anggi
+              <DaisyFlower size={24} />
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#1A4D80] leading-tight">
+                Penyemangat Khusus Nisaa
               </h2>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/85 backdrop-blur-md rounded-full text-[13px] font-bold text-[#7F4CD1] border border-[#E8DCF8] shadow-sm shrink-0">
-              <GraduationCap size={14} className="text-[#9B6FE4]" />
+            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-[#2B6CB0] border border-[#CFE9FF] shadow-xs shrink-0">
+              <GraduationCap size={14} className="text-[#5DA9FF]" />
               <span>Doa Dari Jauh</span>
             </div>
           </div>
-          <p className="text-base text-[#5C4478] leading-relaxed">
-            Meskipun kita belum pernah ketemu langsung dan terhalang jarak, doa dan semangat dari Abg gak pernah putus buat nemenin hapalan, tugas, dan ujian Anggi! 🌸📖
+          <p className="text-sm sm:text-base text-[#4A6482] leading-relaxed">
+            Meskipun terhalang jarak, doa dan energi manis dari Abg gak pernah putus buat nemenin lelahnya kuliah, tugas, dan jadwal padat Nisaa! 🌸📚
           </p>
         </div>
 
@@ -97,16 +116,16 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 rounded-3xl bg-gradient-to-r from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] shadow-sm space-y-3"
+          className="p-4 rounded-3xl bg-gradient-to-r from-[#F4F9FD] via-[#FFF5F8] to-[#FDF6EE] border border-[#CFE9FF] shadow-xs space-y-3"
         >
           <div className="flex items-center justify-between">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#7F4CD1]">
-              <BookOpen size={14} className="text-[#9B6FE4]" />
-              <span>Kapsul Semangat Ujian & Tugas Hari Ini</span>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2B6CB0]">
+              <BookOpen size={14} className="text-[#5DA9FF]" />
+              <span>Kapsul Semangat Kuliah & Tugas Hari Ini</span>
             </div>
             <button
               onClick={handleNextCheer}
-              className="text-xs font-bold text-[#D870B8] hover:text-[#9B6FE4] transition-colors flex items-center gap-1 cursor-pointer"
+              className="text-xs font-bold text-[#E06287] hover:text-[#2B6CB0] transition-colors flex items-center gap-1 cursor-pointer"
             >
               <RotateCw size={12} />
               <span>Ganti Pesan</span>
@@ -117,19 +136,19 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({
             key={activeCheerIndex}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-sm sm:text-base font-semibold text-[#28163E] bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-[#E8DCF8] shadow-sm flex items-start gap-2.5 leading-relaxed"
+            className="text-sm sm:text-base font-semibold text-[#1A4D80] bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-[#CFE9FF] shadow-xs flex items-start gap-2.5 leading-relaxed"
           >
             <span className="text-lg shrink-0">🌸</span>
             <span>"{STUDY_CHEERS[activeCheerIndex]}"</span>
           </motion.div>
 
           <div className="flex items-center justify-between pt-0.5">
-            <span className="text-[12px] text-[#8E76A8]">
-              Tekan tombol untuk kirim energi doa & peluk virtual:
+            <span className="text-[11px] sm:text-xs text-[#6D3F33]">
+              Kirim energi doa & peluk virtual:
             </span>
             <button
               onClick={handleSendCheerBurst}
-              className="px-3.5 py-1.5 bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white rounded-full text-xs font-bold shadow-[0_4px_12px_rgba(155,111,228,0.25)] hover:opacity-95 transition-opacity cursor-pointer flex items-center gap-1.5"
+              className="px-3.5 py-1.5 bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white rounded-full text-xs font-bold shadow-[0_4px_12px_rgba(43,108,176,0.25)] hover:opacity-95 transition-opacity cursor-pointer flex items-center gap-1.5"
             >
               <Sparkles size={12} className="text-[#FCEEF6]" />
               <span>Kirim Semangat ✨</span>
@@ -154,8 +173,8 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({
                 {!isFlipped ? (
                   <div className="relative w-full h-full flex flex-col justify-between">
                     <div
-                      className="relative w-full aspect-[181/247.31] rounded-[18px] overflow-hidden bg-[#28163E] shrink-0"
-                      style={{ aspectRatio: '181 / 247.31' }}
+                      className="relative w-full aspect-[9/16] rounded-[18px] overflow-hidden bg-[#28163E] shrink-0"
+                      style={{ aspectRatio: '9 / 16' }}
                     >
                       <img
                         src={card.src}
@@ -215,7 +234,11 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="relative w-full h-full rounded-[18px] bg-gradient-to-br from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] p-3 flex flex-col justify-between text-center overflow-hidden">
+                  <div
+                    onClick={(e) => toggleFlip(card.id, e)}
+                    className="relative w-full aspect-[9/16] rounded-[18px] bg-gradient-to-br from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] p-3 flex flex-col justify-between text-center overflow-hidden"
+                    style={{ aspectRatio: '9 / 16' }}
+                  >
                     <div className="space-y-0.5 shrink-0">
                       <div className="inline-flex items-center gap-1 text-[11px] sm:text-[12px] font-bold text-[#7F4CD1]">
                         <SakuraBlossom size={13} />
@@ -249,16 +272,16 @@ export const CoupleSection: React.FC<CoupleSectionProps> = ({
         <button
           onClick={onPrevPage}
           aria-label="Halaman Sebelumnya"
-          className="w-14 h-14 min-w-[54px] min-h-[54px] rounded-full bg-white/90 backdrop-blur-md border border-[#E8DCF8] shadow-sm flex items-center justify-center text-[#28163E] shrink-0 cursor-pointer hover:bg-[#E8DCF8]/30 transition-colors"
+          className="w-13 h-13 min-w-[50px] min-h-[50px] rounded-full bg-white/95 backdrop-blur-md border border-[#CFE9FF] shadow-xs flex items-center justify-center text-[#1A4D80] shrink-0 cursor-pointer hover:bg-[#EAF4FE] transition-colors"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={19} />
         </button>
 
         <motion.button
           whileTap={{ scale: 0.96 }}
           whileHover={{ scale: 1.02 }}
           onClick={onNextPage}
-          className="flex-1 py-4 px-6 bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white rounded-full font-bold text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(155,111,228,0.32)] transition-opacity hover:opacity-95"
+          className="flex-1 py-3.5 px-6 bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(43,108,176,0.28)] transition-opacity hover:opacity-95"
         >
           <span>Lanjut ke Janji & Voucher Abg</span>
           <ArrowRight size={18} className="text-[#FCEEF6]" />

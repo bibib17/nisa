@@ -3,7 +3,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Sparkles, Clock, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { FilmstripWidget } from './FilmstripWidget';
-import { FlowerIcon, FloralCornerOrnament } from './FloralAccents';
+import {
+  FlowerIcon,
+  FloralCornerOrnament,
+  DaisyFlower,
+  ChocolateBarIcon,
+  TeddyBearIcon,
+  SkybloomBranchDecoration,
+  SkybloomLeftBranchDecoration,
+  CornerFloralBranch,
+  CloudClusterBackdrop,
+  FlowerBouquetBadge,
+  FluffyCloud,
+  RomanticQuoteBlock,
+} from './FloralAccents';
 import { HERO_FILMSTRIP } from '../data/content';
 import { HeroFilmstripItem } from '../types';
 
@@ -28,10 +41,10 @@ export const HeroCollage: React.FC<HeroCollageProps> = ({
   const handleHeartBurst = (e: React.MouseEvent) => {
     e.stopPropagation();
     confetti({
-      particleCount: 32,
-      spread: 70,
+      particleCount: 36,
+      spread: 75,
       origin: { y: 0.88, x: 0.5 },
-      colors: ['#9B6FE4', '#D870B8', '#B899EE', '#FCEEF6', '#FDE047'],
+      colors: ['#5DA9FF', '#2B6CB0', '#E06287', '#FCE7F0', '#FBBF24', '#7A4839'],
       shapes: ['circle'],
       scalar: 1.15,
     });
@@ -60,57 +73,93 @@ export const HeroCollage: React.FC<HeroCollageProps> = ({
   };
 
   return (
-    <div className="relative w-full min-h-[820px] bg-transparent pt-6 pb-12 px-4 flex flex-col justify-between select-none">
+    <div className="relative w-full min-h-[820px] bg-transparent pt-3 pb-10 px-3 sm:px-5 flex flex-col justify-between select-none overflow-hidden">
+      {/* Decorative Skybloom White Daisy Branch in Background Top Corner */}
+      <SkybloomBranchDecoration opacity={0.7} />
+
       {/* Top Bar: Headline & Filmstrip Controller */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-20 flex flex-col gap-4 px-2"
+        className="relative z-20 flex flex-col gap-4 px-1"
       >
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-          <div className="space-y-2.5 max-w-sm lg:max-w-xl">
-            {/* Dainty Floral Tag */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5">
+          <div className="space-y-3 max-w-sm lg:max-w-xl">
+            {/* Category Kicker with Fine Lines */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 backdrop-blur-md rounded-full text-xs font-bold text-[#7F4CD1] border border-[#E8DCF8] shadow-sm"
+              className="flex items-center gap-2"
             >
-              <FlowerIcon size={13} petalColor="#D870B8" />
-              <span>Bunga Paling Cantik & Istimewa</span>
+              <span className="h-[1.5px] w-6 sm:w-8 bg-[#5DA9FF]/60" />
+              <span className="text-[11px] sm:text-xs uppercase tracking-[0.22em] font-extrabold text-[#2B6CB0]">
+                RUANG CINTA & SEMANGAT KULIAH
+              </span>
+              <span className="h-[1.5px] w-6 sm:w-8 bg-[#5DA9FF]/60" />
             </motion.div>
 
+            {/* Main Skybloom Headline: Serif + Dancing Script Cursive */}
             <motion.h1
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="text-4xl sm:text-5xl lg:text-[72px] font-black text-[#28163E] tracking-tight leading-[1.05]"
+              className="font-serif text-3xl sm:text-5xl lg:text-[58px] font-bold text-[#1A4D80] tracking-tight leading-[1.08]"
             >
-              Anggi Anisa Lintang
+              Senyum Manis{' '}
+              <span className="font-script font-normal text-4xl sm:text-6xl lg:text-[68px] text-[#E06287] italic block sm:inline mt-1 sm:mt-0 sm:ml-2">
+                Nisaa Cintakuu
+              </span>
             </motion.h1>
 
+            {/* Romantic Accents Bar: Coklat, Bunga, Love, Boneka */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.05 }}
+              className="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-0.5"
+            >
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#CFE9FF] text-xs font-bold text-[#2B6CB0] shadow-xs backdrop-blur-md">
+                <DaisyFlower size={14} />
+                <span>Bunga Manis</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDF6EE] border border-[#EADBC8] text-xs font-bold text-[#6D3F33] shadow-xs">
+                <ChocolateBarIcon size={14} />
+                <span>Cokelat Moodbooster</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF5F8] border border-[#FCE7F0] text-xs font-bold text-[#E06287] shadow-xs">
+                <TeddyBearIcon size={14} />
+                <span>Boneka Peluk</span>
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F5FAFF] border border-[#CFE9FF] text-xs font-semibold text-[#1A4D80]">
+                <Heart size={12} fill="#E06287" className="text-[#E06287]" />
+                <span>Cinta Tulus</span>
+              </span>
+            </motion.div>
+
+            {/* Description Text */}
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.08 }}
-              className="text-base sm:text-lg text-[#5C4478] leading-relaxed max-w-md"
+              className="text-sm sm:text-base text-[#4A6482] leading-relaxed max-w-md pt-0.5"
             >
-              Walau belum pernah ketemu langsung, senyum dan semangat Anggi selalu jadi hal paling istimewa buat Abg.
+              Buat Nisaa yang lagi capek-capeknya kuliah... Sumpah senyum manismu di foto dan video ini bikin candu banget, selalu bikin hati luluh. Pokoknya Abg sayang dan bangga banget sama Nisaa! 💕
             </motion.p>
 
-            {/* Primary Action Button in First Screen */}
+            {/* CTA Button */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.14 }}
-              className="pt-1"
+              className="pt-1 flex flex-wrap items-center gap-2.5"
             >
               <button
                 onClick={onNextPage}
-                className="inline-flex items-center gap-2.5 py-3.5 px-7 rounded-full bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white font-bold text-base min-h-[48px] hover:opacity-95 shadow-[0_10px_25px_rgba(155,111,228,0.32)] transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white font-bold text-sm sm:text-base min-h-[46px] hover:opacity-95 shadow-[0_10px_25px_rgba(43,108,176,0.28)] transition-all cursor-pointer"
               >
-                <span>Buka Semangat Buat Anggi</span>
-                <ArrowRight size={18} className="text-[#FCEEF6]" />
+                <span>Buka Semangat Buat Nisaa</span>
+                <ArrowRight size={17} className="text-[#FCEEF6]" />
               </button>
             </motion.div>
           </div>
@@ -126,46 +175,50 @@ export const HeroCollage: React.FC<HeroCollageProps> = ({
         </div>
       </motion.div>
 
-      {/* Central Moving Picture Showcase Controlled by Widget */}
+      {/* Central Moving Picture Showcase with Fluffy Cloud & Flower Branch Backdrop */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         className="relative z-10 flex-1 flex items-center justify-center my-6"
       >
+        {/* Soft Fluffy Anime Clouds Backdrop */}
+        <CloudClusterBackdrop className="-bottom-8 scale-110 sm:scale-125" />
+
         <div
           onClick={handleCutoutClick}
-          className="relative w-[300px] sm:w-[380px] lg:w-[440px] h-[380px] sm:h-[460px] lg:h-[520px] cursor-pointer"
+          className="relative w-[280px] sm:w-[330px] lg:w-[370px] max-w-[85vw] aspect-[9/16] cursor-pointer"
+          style={{ aspectRatio: '9 / 16' }}
         >
-          {/* Floral Corner Ornaments on Frame */}
-          <FloralCornerOrnament position="top-right" />
-          <FloralCornerOrnament position="bottom-left" />
+          {/* Floral Corner Branches on Frame */}
+          <CornerFloralBranch position="top-right" />
+          <CornerFloralBranch position="bottom-left" />
 
-          {/* Dynamic Floating Sticker 1: Active Tag with Flower */}
+          {/* Dynamic Floating Sticker 1: Active Tag with Daisy */}
           <motion.div
             key={activeMedia.tag}
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute top-4 left-4 z-20 px-3.5 py-1.5 bg-white/90 backdrop-blur-md text-[#7F4CD1] border border-[#E8DCF8] text-sm font-bold rounded-full flex items-center gap-1.5 shadow-[0_4px_12px_rgba(155,111,228,0.15)]"
+            className="absolute top-4 left-4 z-20 px-3.5 py-1.5 bg-white/95 backdrop-blur-md text-[#2B6CB0] border border-[#CFE9FF] text-xs sm:text-sm font-bold rounded-full flex items-center gap-1.5 shadow-[0_4px_12px_rgba(43,108,176,0.14)]"
           >
-            <FlowerIcon size={14} petalColor="#D870B8" />
+            <DaisyFlower size={14} />
             <span>{activeMedia.tag}</span>
           </motion.div>
 
-          {/* Dynamic Floating Sticker 2: Active Time */}
+          {/* Dynamic Floating Sticker 2: Active Time with Teddy Bear Accent */}
           <motion.div
             key={activeMedia.time}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-10 right-2 z-20 px-4 py-1.5 bg-[#28163E]/90 backdrop-blur-md text-[#FFFFFF] text-sm font-semibold rounded-full flex items-center gap-1.5 shadow-md"
+            className="absolute bottom-10 right-2 z-20 px-3.5 py-1.5 bg-[#1A4D80]/90 backdrop-blur-md text-[#FFFFFF] text-xs sm:text-sm font-semibold rounded-full flex items-center gap-1.5 shadow-md border border-white/20"
           >
-            <Clock size={15} className="text-[#E8DCF8]" />
+            <TeddyBearIcon size={14} />
             <span>{activeMedia.time}</span>
           </motion.div>
 
           {/* Moving Picture Footage Container */}
-          <div className="w-full h-full rounded-[32px] overflow-hidden bg-white p-2 border border-[#E8DCF8] shadow-[0_20px_45px_rgba(155,111,228,0.18)]">
-            <div className="w-full h-full rounded-[24px] overflow-hidden bg-[#28163E]">
+          <div className="w-full h-full rounded-[32px] overflow-hidden bg-white p-2 border border-[#CFE9FF] shadow-[0_20px_45px_rgba(43,108,176,0.18)]">
+            <div className="w-full h-full rounded-[24px] overflow-hidden bg-[#1A4D80]">
               <AnimatePresence mode="wait">
                 {activeMedia.type === 'video' ? (
                   <motion.video
@@ -215,31 +268,34 @@ export const HeroCollage: React.FC<HeroCollageProps> = ({
                 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.9, ease: 'easeOut' }}
-                className="absolute pointer-events-none text-[#9B6FE4] z-30 flex items-center justify-center"
+                className="absolute pointer-events-none text-[#E06287] z-30 flex items-center justify-center"
               >
-                <Heart size={28} fill="#9B6FE4" />
+                <Heart size={28} fill="#E06287" />
               </motion.div>
             ))}
           </AnimatePresence>
         </div>
       </motion.div>
 
+      {/* Romantic Quote Callout Block Matching Skybloom Reference */}
+      <RomanticQuoteBlock />
+
       {/* Bottom Interactive Navigation Action Bar */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.28 }}
-        className="relative z-30 flex items-center gap-3 px-2"
+        className="relative z-30 flex items-center gap-3 px-1 pt-2"
       >
-        {/* Flower Burst Pill */}
+        {/* Flower & Love Burst Button */}
         <motion.button
           whileTap={{ scale: 0.88 }}
           whileHover={{ scale: 1.06 }}
           onClick={handleHeartBurst}
           aria-label="Kirim Partikel Bunga & Hati"
-          className="w-14 h-14 min-w-[54px] min-h-[54px] rounded-full bg-white/90 backdrop-blur-md border border-[#E8DCF8] shadow-[0_4px_16px_rgba(155,111,228,0.15)] flex items-center justify-center text-[#9B6FE4] shrink-0 cursor-pointer"
+          className="w-13 h-13 min-w-[50px] min-h-[50px] rounded-full bg-white/95 backdrop-blur-md border border-[#CFE9FF] shadow-[0_4px_16px_rgba(43,108,176,0.12)] flex items-center justify-center text-[#2B6CB0] shrink-0 cursor-pointer"
         >
-          <FlowerIcon size={26} petalColor="#D870B8" />
+          <DaisyFlower size={24} />
         </motion.button>
 
         {/* Primary Action Button to Proceed to Next Page */}
@@ -247,9 +303,9 @@ export const HeroCollage: React.FC<HeroCollageProps> = ({
           whileTap={{ scale: 0.96 }}
           whileHover={{ scale: 1.02 }}
           onClick={onNextPage}
-          className="flex-1 py-4 px-6 bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-[#FFFFFF] rounded-full font-bold text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(155,111,228,0.32)] transition-opacity hover:opacity-95"
+          className="flex-1 py-3.5 px-6 bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-[#FFFFFF] rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(43,108,176,0.28)] transition-opacity hover:opacity-95"
         >
-          <span>Lanjut ke Cerita</span>
+          <span>Lanjut ke Cerita Nisaa</span>
           <ArrowRight size={18} className="text-[#FCEEF6]" />
         </motion.button>
       </motion.div>

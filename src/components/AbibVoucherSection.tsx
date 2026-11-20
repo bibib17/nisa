@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Heart,
@@ -18,7 +19,15 @@ import confetti from 'canvas-confetti';
 import { ABIB_SOLO_CARDS } from '../data/content';
 import { VoucherState, PhotocardItem } from '../types';
 import { generateVoucherTicket, VoucherData } from '../utils/voucherGenerator';
-import { FlowerIcon, SakuraBlossom } from './FloralAccents';
+import {
+  FlowerIcon,
+  SakuraBlossom,
+  DaisyFlower,
+  ChocolateBarIcon,
+  TeddyBearIcon,
+  SkybloomBranchDecoration,
+  SkybloomLeftBranchDecoration,
+} from './FloralAccents';
 
 interface AbibVoucherSectionProps {
   vouchers: VoucherState;
@@ -43,6 +52,23 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
     data: VoucherData;
     filename: string;
   } | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock body scroll while modal is active
+  useEffect(() => {
+    if (activeTicketModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeTicketModal]);
 
   const toggleFlip = (id: string, e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -76,9 +102,9 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
     if (type === 'chocolate') {
       return {
         type: 'chocolate',
-        title: 'Voucher Coklat & Moodbooster Belajar',
-        subtitle: 'Tiap kali pusing hapalan atau tugas ujian, tinggal pilih coklat favorit, Abg yang orderin delivery sampai depan rumahmu! 🍫🌸',
-        code: 'CHOC-ANGGI-UNLIMITED',
+        title: 'Voucher Coklat & Moodbooster Kuliah',
+        subtitle: 'Tiap kali pusing tugas kuliah atau capek kelas, tinggal pilih coklat favorit, Abg yang orderin delivery sampai depan tempat Nisaa! 🍫🌸',
+        code: 'CHOC-NISAA-UNLIMITED',
         claimDate,
       };
     }
@@ -86,8 +112,8 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
     return {
       type: 'hug',
       title: 'Voucher Teman Call & Peluk Virtual LDR',
-      subtitle: 'Sesi call nemenin belajar tanpa batas waktu plus telinga yang siap dengerin curhat capeknya Anggi. 🫂🌸',
-      code: 'HUG-ANGGI-ALWAYS',
+      subtitle: 'Sesi call nemenin ngerjain tugas kuliah tanpa batas waktu plus telinga yang siap dengerin curhat capeknya Nisaa. 🫂🌸',
+      code: 'HUG-NISAA-ALWAYS',
       claimDate,
     };
   };
@@ -97,8 +123,8 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
     const dataUrl = generateVoucherTicket(data);
     const filename =
       type === 'chocolate'
-        ? 'Voucher-Coklat-Khusus-Anggi.png'
-        : 'Voucher-Peluk-Khusus-Anggi.png';
+        ? 'Voucher-Coklat-Khusus-Nisaa.png'
+        : 'Voucher-Peluk-Khusus-Nisaa.png';
 
     setActiveTicketModal({
       dataUrl,
@@ -154,24 +180,35 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
   };
 
   return (
-    <div className="relative w-full min-h-[750px] py-8 px-4 flex flex-col justify-between select-none">
-      <div className="space-y-7">
+    <div className="relative w-full min-h-[750px] py-8 px-4 flex flex-col justify-between select-none overflow-hidden">
+      {/* Decorative Skybloom White Daisy Branch in Background Top Corner */}
+      <SkybloomBranchDecoration opacity={0.65} />
+
+      <div className="space-y-7 relative z-10">
         {/* Header Bagian 3 */}
-        <div className="space-y-1.5 px-1">
+        <div className="space-y-2 px-1">
+          <div className="flex items-center gap-2">
+            <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-extrabold text-[#2B6CB0]">
+              KOMITMEN & VOUCHER KASIH SAYANG
+            </span>
+            <span className="h-[1.5px] w-6 bg-[#5DA9FF]/50" />
+          </div>
+
           <div className="flex items-center justify-between">
             <div className="inline-flex items-center gap-2">
-              <FlowerIcon size={22} petalColor="#9B6FE4" />
-              <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[#28163E] leading-tight">
-                Janji & Voucher Abg
+              <DaisyFlower size={24} />
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[#1A4D80] leading-tight">
+                Janji & Voucher Khusus Nisaa
               </h2>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/85 backdrop-blur-md rounded-full text-[13px] font-bold text-[#7F4CD1] border border-[#E8DCF8] shadow-sm shrink-0">
-              <Shield size={13} className="text-[#9B6FE4]" />
+            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/95 backdrop-blur-md rounded-full text-xs font-bold text-[#2B6CB0] border border-[#CFE9FF] shadow-xs shrink-0">
+              <Shield size={13} className="text-[#5DA9FF]" />
               <span>Jaminan Abg</span>
             </div>
           </div>
-          <p className="text-base text-[#5C4478] leading-relaxed">
-            Klaim voucher kasih sayang & komitmen Abg dari jauh untuk Anggi Anisa Lintang.
+          <p className="text-sm sm:text-base text-[#4A6482] leading-relaxed">
+            Klaim voucher kasih sayang, cokelat moodbooster & boneka peluk virtual dari Abg untuk Nisaa Cintakuu.
           </p>
         </div>
 
@@ -180,7 +217,7 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
           <div className="flex items-center justify-between px-1">
             <h3 className="text-lg font-bold text-[#28163E] flex items-center gap-1.5">
               <SakuraBlossom size={16} />
-              <span>Komitmen Abg Buat Anggi</span>
+              <span>Komitmen Abg Buat Nisaa</span>
             </h3>
             <span className="text-[13px] text-[#8E76A8]">
               Ketuk untuk baca janji
@@ -203,8 +240,8 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
                   {!isFlipped ? (
                     <div className="relative w-full h-full flex flex-col justify-between">
                       <div
-                        className="relative w-full aspect-[181/247.31] rounded-[18px] overflow-hidden bg-[#28163E] shrink-0"
-                        style={{ aspectRatio: '181 / 247.31' }}
+                        className="relative w-full aspect-[9/16] rounded-[18px] overflow-hidden bg-[#28163E] shrink-0"
+                        style={{ aspectRatio: '9 / 16' }}
                       >
                         <img
                           src={card.src}
@@ -264,7 +301,11 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
                       </div>
                     </div>
                   ) : (
-                    <div className="relative w-full h-full rounded-[18px] bg-gradient-to-br from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] p-3 flex flex-col justify-between text-center overflow-hidden">
+                    <div
+                      onClick={(e) => toggleFlip(card.id, e)}
+                      className="relative w-full aspect-[9/16] rounded-[18px] bg-gradient-to-br from-[#F5F0FB] via-[#FCEEF6] to-[#F5F0FB] border border-[#EAE1FA] p-3 flex flex-col justify-between text-center overflow-hidden"
+                      style={{ aspectRatio: '9 / 16' }}
+                    >
                       <div className="space-y-0.5 shrink-0">
                         <div className="inline-flex items-center gap-1 text-[11px] sm:text-[12px] font-bold text-[#7F4CD1]">
                           <FlowerIcon size={12} petalColor="#9B6FE4" />
@@ -307,7 +348,7 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
             <div className="space-y-3.5">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <span className="text-[11px] sm:text-[12px] font-bold text-[#7F4CD1] bg-[#F5F0FB] px-2.5 py-0.5 rounded-full border border-[#EAE1FA]">
-                  KODE: CHOC-ANGGI-UNLIMITED
+                  KODE: CHOC-NISAA-UNLIMITED
                 </span>
                 <span className="px-3 py-0.5 rounded-full bg-[#FCEEF6] text-[11px] sm:text-[12px] font-bold text-[#BE4B9B] border border-[#F3B8DF]/50">
                   Anti Expired
@@ -315,15 +356,15 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#7F4CD1] to-[#9B6FE4] text-white flex items-center justify-center shrink-0 shadow-md">
-                  <Coffee size={22} />
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#3D231E] to-[#7A4839] text-white flex items-center justify-center shrink-0 shadow-md">
+                  <ChocolateBarIcon size={24} />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-base font-bold text-[#28163E] leading-tight">
-                    Voucher Coklat & Moodbooster Belajar 🍫
+                  <h4 className="text-base font-bold text-[#1A4D80] leading-tight">
+                    Voucher Cokelat Moodbooster Kuliah 🍫
                   </h4>
-                  <p className="text-sm text-[#5C4478] leading-relaxed">
-                    Tiap kali pusing hapalan atau tugas ujian, tinggal pilih coklat favorit, Abg yang orderin delivery sampai depan rumahmu!
+                  <p className="text-sm text-[#4A6482] leading-relaxed">
+                    Tiap kali pusing tugas kuliah atau capek kelas, tinggal pilih coklat favorit, Abg yang orderin delivery sampai depan tempat Nisaa!
                   </p>
                 </div>
               </div>
@@ -333,7 +374,7 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
                   <div className="space-y-2">
                     <div className="w-full py-2.5 px-4 rounded-full bg-[#F5F0FB] text-[#7F4CD1] font-semibold text-[13px] flex items-center justify-center gap-1.5 border border-[#EAE1FA]">
                       <CheckCircle2 size={15} className="text-[#9B6FE4]" />
-                      <span>Voucher Sudah Terklaim Khusus Anggi</span>
+                      <span>Voucher Sudah Terklaim Khusus Nisaa</span>
                     </div>
                     <motion.button
                       whileTap={{ scale: 0.96 }}
@@ -369,7 +410,7 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
             <div className="space-y-3.5">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <span className="text-[11px] sm:text-[12px] font-bold text-[#BE4B9B] bg-[#FCEEF6] px-2.5 py-0.5 rounded-full border border-[#F3B8DF]/50">
-                  KODE: HUG-ANGGI-ALWAYS
+                  KODE: HUG-NISAA-ALWAYS
                 </span>
                 <span className="px-3 py-0.5 rounded-full bg-[#F5F0FB] text-[11px] sm:text-[12px] font-bold text-[#7F4CD1] border border-[#EAE1FA]">
                   Prioritas Utama
@@ -377,15 +418,15 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#D870B8] to-[#E89FD5] text-white flex items-center justify-center shrink-0 shadow-md">
-                  <Heart size={22} fill="#FFFFFF" />
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#2B6CB0] via-[#5DA9FF] to-[#E06287] text-white flex items-center justify-center shrink-0 shadow-md">
+                  <TeddyBearIcon size={24} />
                 </div>
                 <div className="space-y-1">
-                  <h4 className="text-base font-bold text-[#28163E] leading-tight">
-                    Voucher Teman Call & Peluk Virtual LDR 🫂🌸
+                  <h4 className="text-base font-bold text-[#1A4D80] leading-tight">
+                    Voucher Boneka Peluk & Teman Call LDR 🧸🌸
                   </h4>
-                  <p className="text-sm text-[#5C4478] leading-relaxed">
-                    Sesi call nemenin belajar kapan pun Anggi butuh, dengerin latihan hapalan, atau sekadar lepas kangen dan capek seharian.
+                  <p className="text-sm text-[#4A6482] leading-relaxed">
+                    Sesi call nemenin ngerjain tugas kuliah kapan pun Nisaa butuh, dengerin curhat dosen, atau sekadar lepas kangen dan capek seharian.
                   </p>
                 </div>
               </div>
@@ -395,7 +436,7 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
                   <div className="space-y-2">
                     <div className="w-full py-2.5 px-4 rounded-full bg-[#FCEEF6] text-[#BE4B9B] font-semibold text-[13px] flex items-center justify-center gap-1.5 border border-[#F3B8DF]/50">
                       <CheckCircle2 size={15} className="text-[#D870B8]" />
-                      <span>Voucher Sudah Terklaim Khusus Anggi</span>
+                      <span>Voucher Sudah Terklaim Khusus Nisaa</span>
                     </div>
                     <motion.button
                       whileTap={{ scale: 0.96 }}
@@ -422,100 +463,110 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
         </div>
       </div>
 
-      {/* Ticket Download & Preview Modal */}
-      <AnimatePresence>
-        {activeTicketModal && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
-            onClick={() => setActiveTicketModal(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0, y: 15 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.92, opacity: 0, y: 15 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-[390px] bg-white/95 backdrop-blur-2xl rounded-[32px] p-6 space-y-4 border border-[#E8DCF8] shadow-[0_25px_60px_rgba(155,111,228,0.25)] overflow-hidden"
-            >
-              {/* Modal Header */}
-              <div className="flex items-center justify-between pb-1">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#F5F0FB] text-[#7F4CD1] flex items-center justify-center border border-[#EAE1FA]">
-                    <Sparkles size={16} />
+      {/* Ticket Download & Preview Modal via React Portal */}
+      {mounted &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {activeTicketModal && (
+              <motion.div
+                key="ticket-modal-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md select-none"
+                onClick={() => setActiveTicketModal(null)}
+              >
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0, y: 15 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 15 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="relative w-full max-w-[380px] max-h-[92vh] overflow-y-auto bg-white/95 backdrop-blur-2xl rounded-[28px] sm:rounded-[32px] p-5 sm:p-6 space-y-4 border border-[#CFE9FF] shadow-[0_25px_60px_rgba(43,108,176,0.3)]"
+                >
+                  {/* Modal Header */}
+                  <div className="flex items-center justify-between pb-1">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-[#EAF4FE] text-[#2B6CB0] flex items-center justify-center border border-[#CFE9FF]">
+                        <Sparkles size={16} />
+                      </div>
+                      <div>
+                        <h3 className="font-serif text-base font-bold text-[#1A4D80] leading-tight">
+                          Tiket Resmi Khusus Nisaa
+                        </h3>
+                        <p className="text-[12px] text-[#4A6482]">
+                          Berlaku seumur hidup, siap ditagih kapan pun 🌸
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setActiveTicketModal(null)}
+                      className="w-8 h-8 rounded-full bg-[#F4F9FD] hover:bg-[#EAF4FE] text-[#1A4D80] hover:text-[#2B6CB0] border border-[#CFE9FF] flex items-center justify-center transition-colors cursor-pointer shadow-xs shrink-0"
+                      aria-label="Tutup"
+                    >
+                      <X size={16} />
+                    </button>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold text-[#28163E] leading-tight">
-                      Tiket Resmi Khusus Anggi
-                    </h3>
-                    <p className="text-[12px] text-[#8E76A8]">
-                      Berlaku seumur hidup, siap ditagih kapan pun 🌸
-                    </p>
+
+                  {/* Ticket Image Preview */}
+                  <div className="rounded-2xl overflow-hidden bg-[#F4F9FD] p-1.5 border border-[#CFE9FF] shadow-inner">
+                    <img
+                      src={activeTicketModal.dataUrl}
+                      alt="Tiket Voucher Resmi Khusus Nisaa Cintakuu"
+                      className="w-full h-auto block rounded-xl shadow-sm"
+                    />
                   </div>
-                </div>
-                <button
-                  onClick={() => setActiveTicketModal(null)}
-                  className="p-1.5 rounded-full text-[#8E76A8] hover:text-[#28163E] hover:bg-[#F5F0FB] transition-colors cursor-pointer"
-                  aria-label="Tutup"
-                >
-                  <X size={20} />
-                </button>
-              </div>
 
-              {/* Ticket Image Preview */}
-              <div className="rounded-2xl overflow-hidden bg-[#F5F0FB] p-1.5 border border-[#E8DCF8] shadow-inner">
-                <img
-                  src={activeTicketModal.dataUrl}
-                  alt="Tiket Voucher Resmi Khusus Anggi Anisa Lintang"
-                  className="w-full h-auto block rounded-xl shadow-sm"
-                />
-              </div>
+                  {/* Action Buttons */}
+                  <div className="space-y-2.5 pt-1">
+                    <motion.button
+                      whileTap={{ scale: 0.96 }}
+                      onClick={handleDownloadTicket}
+                      className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(43,108,176,0.3)] hover:opacity-95 transition-all cursor-pointer"
+                    >
+                      <Download size={18} className="text-[#FCEEF6]" />
+                      <span>Download Foto Tiket PNG</span>
+                    </motion.button>
 
-              {/* Action Buttons */}
-              <div className="space-y-2.5 pt-1">
-                <motion.button
-                  whileTap={{ scale: 0.96 }}
-                  onClick={handleDownloadTicket}
-                  className="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(155,111,228,0.3)] hover:opacity-95 transition-all cursor-pointer"
-                >
-                  <Download size={18} className="text-[#FCEEF6]" />
-                  <span>Download Foto Tiket PNG</span>
-                </motion.button>
+                    <a
+                      href={`https://wa.me/6285133933560?text=${encodeURIComponent(
+                        `Bg, aku sudah klaim tiket resmi khusus Nisaa Cintakuu: "${activeTicketModal.data.title}". Ini bukti tiketnya, siap-siap ditagih yaa! Sumpah senyumku buat kamu terus kok 🌸`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 px-5 rounded-full bg-[#F4F9FD] text-[#2B6CB0] border border-[#CFE9FF] hover:bg-[#EAF4FE] font-bold text-sm flex items-center justify-center gap-2 transition-colors text-center"
+                    >
+                      <MessageCircle size={17} />
+                      <span>Kirim & Tagih ke WhatsApp Abg</span>
+                    </a>
+                  </div>
 
-                <a
-                  href={`https://wa.me/6285133933560?text=${encodeURIComponent(
-                    `Bg, aku sudah klaim tiket resmi khusus Anggi Anisa Lintang: "${activeTicketModal.data.title}". Ini bukti tiketnya, siap-siap ditagih yaa! 🌸`
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 px-5 rounded-full bg-[#F5F0FB] text-[#7F4CD1] border border-[#EAE1FA] hover:bg-[#E8DCF8]/60 font-bold text-sm flex items-center justify-center gap-2 transition-colors text-center"
-                >
-                  <MessageCircle size={17} />
-                  <span>Kirim & Tagih ke WhatsApp Abg</span>
-                </a>
-              </div>
-
-              <p className="text-center text-[12px] text-[#8E76A8] italic">
-                Tiket ini adalah dokumen cinta resmi yang mengikat Abg untuk selalu memanjakan dan menyemangati Anggi dari jauh sampai nanti kita ketemu langsung.
-              </p>
-            </motion.div>
-          </div>
+                  <p className="text-center text-[12px] text-[#6D3F33] italic">
+                    Tiket ini adalah dokumen cinta resmi yang mengikat Abg untuk selalu memanjakan dan menyemangati Nisaa yang lagi capek kuliah sampai nanti kita ketemu langsung.
+                  </p>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
 
       {/* Navigation Controls */}
       <div className="pt-6 flex items-center gap-3">
         <button
           onClick={onPrevPage}
           aria-label="Halaman Sebelumnya"
-          className="w-14 h-14 min-w-[54px] min-h-[54px] rounded-full bg-white/90 backdrop-blur-md border border-[#E8DCF8] shadow-sm flex items-center justify-center text-[#28163E] shrink-0 cursor-pointer hover:bg-[#E8DCF8]/30 transition-colors"
+          className="w-13 h-13 min-w-[50px] min-h-[50px] rounded-full bg-white/95 backdrop-blur-md border border-[#CFE9FF] shadow-xs flex items-center justify-center text-[#1A4D80] shrink-0 cursor-pointer hover:bg-[#EAF4FE] transition-colors"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={19} />
         </button>
 
         <motion.button
           whileTap={{ scale: 0.96 }}
           whileHover={{ scale: 1.02 }}
           onClick={onNextPage}
-          className="flex-1 py-4 px-6 bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white rounded-full font-bold text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(155,111,228,0.32)] transition-opacity hover:opacity-95"
+          className="flex-1 py-3.5 px-6 bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white rounded-full font-bold text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer shadow-[0_10px_25px_rgba(43,108,176,0.28)] transition-opacity hover:opacity-95"
         >
           <span>Pesan Terakhir Abg</span>
           <ArrowRight size={18} className="text-[#FCEEF6]" />

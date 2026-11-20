@@ -152,7 +152,7 @@ export function generateVoucherTicket(data: VoucherData): string {
   // 5. Exclusivity Banner Header
   ctx.fillStyle = primaryColor;
   ctx.font = 'bold 15px system-ui, -apple-system, sans-serif';
-  ctx.fillText('VOUCHER RESMI · EKSKLUSIF KHUSUS ANGGI ANISA LINTANG', mx + 50, my + 44);
+  ctx.fillText('VOUCHER RESMI · EKSKLUSIF KHUSUS NISAA CINTAKUU', mx + 50, my + 44);
 
   // Little decorative flower next to header
   drawFlower(ctx, mx + 34, my + 38, 7, accentColor);
@@ -195,7 +195,7 @@ export function generateVoucherTicket(data: VoucherData): string {
 
   ctx.fillStyle = '#28163E';
   ctx.font = 'bold 15px system-ui, -apple-system, sans-serif';
-  ctx.fillText('Anggi Anisa Lintang', col1X, my + 240);
+  ctx.fillText('Nisaa Cintakuu', col1X, my + 240);
   ctx.fillText('Seumur Hidup (Anti Expired)', col2X, my + 240);
   ctx.fillText(data.claimDate, col3X, my + 240);
 
@@ -230,7 +230,7 @@ export function generateVoucherTicket(data: VoucherData): string {
   ctx.fillStyle = accentColor;
   ctx.font = 'bold 11px system-ui, -apple-system, sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('· KHUSUS ANGGI ·', 0, -20);
+  ctx.fillText('· KHUSUS NISAA ·', 0, -20);
   ctx.font = 'bold 13px system-ui, -apple-system, sans-serif';
   ctx.fillText('100% ASLI', 0, 0);
   ctx.font = 'bold 10px system-ui, -apple-system, sans-serif';

@@ -9,7 +9,12 @@ import { CoupleSection } from './components/CoupleSection';
 import { AbibVoucherSection } from './components/AbibVoucherSection';
 import { OutroSection } from './components/OutroSection';
 import { AudioPlayerController } from './components/AudioPlayerController';
-import { FloatingFloralPetals, FlowerIcon } from './components/FloralAccents';
+import {
+  FloatingFloralPetals,
+  FloatingSkyClouds,
+  FlowerIcon,
+  DaisyFlower,
+} from './components/FloralAccents';
 import { asset } from './utils/assets';
 import { VoucherState } from './types';
 
@@ -67,7 +72,7 @@ export default function App() {
   }, [vouchers]);
 
   useEffect(() => {
-    const audio = new Audio(asset('audio/peak-of-love.mp3'));
+    const audio = new Audio(asset('audio/the-way-you-look-at-me.mp3'));
     audio.loop = true;
     audio.volume = 0.85;
     audioRef.current = audio;
@@ -144,7 +149,8 @@ export default function App() {
 
   return (
     <div className="min-h-[100dvh] bg-romantic-pattern text-[#28163E] relative overflow-x-hidden selection:bg-[#E8DCF8] selection:text-[#28163E]">
-      {/* Ambient Floating Floral Petals */}
+      {/* Ambient Drifting Anime Sky Clouds & Floating Floral Petals */}
+      <FloatingSkyClouds />
       <FloatingFloralPetals />
 
       {/* 0. Gate Screen (Opened on demand) */}
@@ -200,11 +206,12 @@ export default function App() {
       ) : (
         /* Main Story Flow: Page by Page Unlocked by Interaction */
         currentPage > 0 && (
-          <main className="relative w-full min-h-[100dvh] max-w-xl mx-auto flex flex-col justify-between pb-10 sm:pb-12">
-            {/* Top Story Header: Romantic Floral Progress Indicator */}
+          <main className="relative w-full min-h-[96dvh] max-w-xl sm:max-w-2xl mx-auto my-2 sm:my-4 rounded-[36px] sm:rounded-[44px] bg-white/95 backdrop-blur-xl border border-[#CFE9FF]/80 shadow-[0_20px_50px_rgba(43,108,176,0.14)] flex flex-col justify-between pb-8 sm:pb-10 overflow-hidden">
+            {/* Top Story Header: Skybloom Romantic Progress Indicator */}
             <header className="relative z-40 w-full pt-4 pb-2 px-4 flex items-center justify-between gap-2 select-none">
-              <div className="flex items-center gap-2 py-1 px-3 bg-white/75 backdrop-blur-md rounded-full border border-[#E8DCF8] shadow-sm">
-                <FlowerIcon size={15} petalColor="#9B6FE4" />
+              <div className="flex items-center gap-2 py-1.5 px-3.5 bg-[#F4F9FD]/90 backdrop-blur-md rounded-full border border-[#CFE9FF] shadow-xs">
+                <DaisyFlower size={15} />
+                <span className="font-serif font-bold text-xs text-[#2B6CB0] hidden sm:inline">Skybloom • Nisaa</span>
                 <div className="flex items-center gap-1.5">
                   {Array.from({ length: TOTAL_PAGES }, (_, i) => i + 1).map((pageNumber) => {
                     const isCurrent = pageNumber === currentPage;
@@ -232,8 +239,8 @@ export default function App() {
                             size={14}
                             className={`transition-colors duration-300 ${
                               isFilled
-                                ? 'text-[#9B6FE4] fill-[#9B6FE4]'
-                                : 'text-[#E8DCF8] fill-[#E8DCF8]/60'
+                                ? 'text-[#E06287] fill-[#E06287]'
+                                : 'text-[#CFE9FF] fill-[#CFE9FF]/60'
                             }`}
                           />
                         </motion.div>
