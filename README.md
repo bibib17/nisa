@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Anggi's Sweetest Corner 🌸
 
 Sebuah web interaktif spesial dan penuh kasih sayang untuk **Anggi Anisa Lintang** dari **Abg**.  
@@ -17,3 +18,7 @@ Dibuat sebagai ruang penyemangat untuk menemani Anggi belajar, persiapan ujian, 
 - **Styling**: Tailwind CSS (Custom Soft Lavender, Pastel Plum & Sakura Blossom Palette)
 - **Animasi & Interaksi**: Framer Motion & Canvas Confetti
 - **Deployment**: GitHub Pages (via GitHub Actions)
+=======
+# nisa
+nisa
+>>>>>>> c3b03ef1dbc6f73bbf8796cff5b46b1f49eb232b
