@@ -102,17 +102,17 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
     if (type === 'chocolate') {
       return {
         type: 'chocolate',
-        title: 'Voucher Coklat & Moodbooster Kuliah',
-        subtitle: 'Tiap kali pusing tugas kuliah atau capek kelas, tinggal pilih coklat favorit, Abg yang orderin delivery sampai depan tempat Nisaa! 🍫🌸',
-        code: 'CHOC-NISAA-UNLIMITED',
+        title: 'Voucher Cokelat Pas Ketemu Langsung',
+        subtitle: 'Khusus waktu kita ketemu nanti! Bebas pilih cokelat apa pun yang Nisaa mau, jalan bareng, dan Abg traktir sepuasnya! 🍫🌸',
+        code: 'CHOC-NISAA-KETEMU',
         claimDate,
       };
     }
 
     return {
       type: 'hug',
-      title: 'Voucher Teman Call & Peluk Virtual LDR',
-      subtitle: 'Sesi call nemenin ngerjain tugas kuliah tanpa batas waktu plus telinga yang siap dengerin curhat capeknya Nisaa. 🫂🌸',
+      title: 'Voucher Peluk & Teman Call LDR',
+      subtitle: 'Sesi call nemenin ngerjain tugas kuliah tanpa batas waktu, dengerin curhat capek, dan peluk virtual terhangat! 🧸🌸',
       code: 'HUG-NISAA-ALWAYS',
       claimDate,
     };
@@ -336,35 +336,35 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
 
         {/* 2 Official Vouchers */}
         <div className="space-y-3.5">
-          {/* Voucher 1: Moodbooster Chocolate */}
+          {/* Voucher 1: Chocolate on Meet */}
           <motion.div
             whileHover={{ scale: 1.01 }}
-            className="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-5.5 overflow-hidden border border-[#E8DCF8] shadow-[0_10px_28px_rgba(155,111,228,0.12)]"
+            className="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-4.5 sm:p-5.5 overflow-hidden border border-[#CFE9FF] shadow-[0_10px_28px_rgba(43,108,176,0.12)]"
           >
             {/* Cutout notches */}
-            <div className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#F5F0FB] border-r border-[#E8DCF8]" />
-            <div className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#F5F0FB] border-l border-[#E8DCF8]" />
+            <div className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-r border-[#CFE9FF]" />
+            <div className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-l border-[#CFE9FF]" />
 
-            <div className="space-y-3.5">
+            <div className="space-y-3">
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="text-[11px] sm:text-[12px] font-bold text-[#7F4CD1] bg-[#F5F0FB] px-2.5 py-0.5 rounded-full border border-[#EAE1FA]">
-                  KODE: CHOC-NISAA-UNLIMITED
+                <span className="text-[11px] sm:text-[12px] font-bold text-[#2B6CB0] bg-[#F4F9FD] px-2.5 py-0.5 rounded-full border border-[#CFE9FF]">
+                  KODE: CHOC-NISAA-KETEMU
                 </span>
-                <span className="px-3 py-0.5 rounded-full bg-[#FCEEF6] text-[11px] sm:text-[12px] font-bold text-[#BE4B9B] border border-[#F3B8DF]/50">
-                  Anti Expired
+                <span className="px-3 py-0.5 rounded-full bg-[#FFF5F8] text-[11px] sm:text-[12px] font-bold text-[#E06287] border border-[#FCE7F0]">
+                  Waktu Ketemu Langsung
                 </span>
               </div>
 
-              <div className="flex items-start gap-3.5">
+              <div className="flex items-start gap-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#3D231E] to-[#7A4839] text-white flex items-center justify-center shrink-0 shadow-md">
                   <ChocolateBarIcon size={24} />
                 </div>
-                <div className="space-y-1">
-                  <h4 className="text-base font-bold text-[#1A4D80] leading-tight">
-                    Voucher Cokelat Moodbooster Kuliah 🍫
+                <div className="space-y-1 min-w-0 flex-1">
+                  <h4 className="text-sm sm:text-base font-bold text-[#1A4D80] leading-snug break-words">
+                    Voucher Cokelat Pas Ketemu Langsung 🍫✨
                   </h4>
-                  <p className="text-sm text-[#4A6482] leading-relaxed">
-                    Tiap kali pusing tugas kuliah atau capek kelas, tinggal pilih coklat favorit, Abg yang orderin delivery sampai depan tempat Nisaa!
+                  <p className="text-xs sm:text-sm text-[#4A6482] leading-relaxed break-words">
+                    Khusus waktu kita ketemu nanti! Bebas pilih cokelat apa pun yang Nisaa mau, jalan bareng, dan Abg traktir sepuasnya! 🥰
                   </p>
                 </div>
               </div>
@@ -372,14 +372,14 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
               <div className="pt-1">
                 {vouchers.chocolateClaimed ? (
                   <div className="space-y-2">
-                    <div className="w-full py-2.5 px-4 rounded-full bg-[#F5F0FB] text-[#7F4CD1] font-semibold text-[13px] flex items-center justify-center gap-1.5 border border-[#EAE1FA]">
-                      <CheckCircle2 size={15} className="text-[#9B6FE4]" />
+                    <div className="w-full py-2.5 px-4 rounded-full bg-[#F4F9FD] text-[#2B6CB0] font-semibold text-[13px] flex items-center justify-center gap-1.5 border border-[#CFE9FF]">
+                      <CheckCircle2 size={15} className="text-[#2B6CB0]" />
                       <span>Voucher Sudah Terklaim Khusus Nisaa</span>
                     </div>
                     <motion.button
                       whileTap={{ scale: 0.96 }}
                       onClick={() => openTicketModal('chocolate')}
-                      className="w-full py-3 px-5 rounded-full bg-[#28163E] text-[#FCEEF6] hover:text-white font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors"
+                      className="w-full py-3 px-5 rounded-full bg-[#1A4D80] text-white hover:bg-[#2B6CB0] font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors"
                     >
                       <Download size={16} />
                       <span>Lihat & Download Tiket Foto PNG</span>
@@ -389,7 +389,7 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
                   <motion.button
                     whileTap={{ scale: 0.95 }}
                     onClick={handleChocolateClaim}
-                    className="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#8E5BE2] via-[#9B6FE4] to-[#D870B8] text-white font-bold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_20px_rgba(155,111,228,0.28)] hover:opacity-95 transition-opacity"
+                    className="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#D870B8] text-white font-bold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_20px_rgba(43,108,176,0.28)] hover:opacity-95 transition-opacity"
                   >
                     <Gift size={16} className="text-[#FCEEF6]" />
                     <span>Klaim & Dapatkan Tiket Foto</span>
@@ -402,31 +402,31 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
           {/* Voucher 2: Warm Hug */}
           <motion.div
             whileHover={{ scale: 1.01 }}
-            className="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-5.5 overflow-hidden border border-[#E8DCF8] shadow-[0_10px_28px_rgba(155,111,228,0.12)]"
+            className="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-4.5 sm:p-5.5 overflow-hidden border border-[#CFE9FF] shadow-[0_10px_28px_rgba(43,108,176,0.12)]"
           >
-            <div className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#F5F0FB] border-r border-[#E8DCF8]" />
-            <div className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#F5F0FB] border-l border-[#E8DCF8]" />
+            <div className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-r border-[#CFE9FF]" />
+            <div className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-l border-[#CFE9FF]" />
 
-            <div className="space-y-3.5">
+            <div className="space-y-3">
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="text-[11px] sm:text-[12px] font-bold text-[#BE4B9B] bg-[#FCEEF6] px-2.5 py-0.5 rounded-full border border-[#F3B8DF]/50">
+                <span className="text-[11px] sm:text-[12px] font-bold text-[#E06287] bg-[#FFF5F8] px-2.5 py-0.5 rounded-full border border-[#FCE7F0]">
                   KODE: HUG-NISAA-ALWAYS
                 </span>
-                <span className="px-3 py-0.5 rounded-full bg-[#F5F0FB] text-[11px] sm:text-[12px] font-bold text-[#7F4CD1] border border-[#EAE1FA]">
+                <span className="px-3 py-0.5 rounded-full bg-[#F4F9FD] text-[11px] sm:text-[12px] font-bold text-[#2B6CB0] border border-[#CFE9FF]">
                   Prioritas Utama
                 </span>
               </div>
 
-              <div className="flex items-start gap-3.5">
+              <div className="flex items-start gap-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#2B6CB0] via-[#5DA9FF] to-[#E06287] text-white flex items-center justify-center shrink-0 shadow-md">
                   <TeddyBearIcon size={24} />
                 </div>
-                <div className="space-y-1">
-                  <h4 className="text-base font-bold text-[#1A4D80] leading-tight">
-                    Voucher Boneka Peluk & Teman Call LDR 🧸🌸
+                <div className="space-y-1 min-w-0 flex-1">
+                  <h4 className="text-sm sm:text-base font-bold text-[#1A4D80] leading-snug break-words">
+                    Voucher Peluk & Teman Call LDR 🧸🌸
                   </h4>
-                  <p className="text-sm text-[#4A6482] leading-relaxed">
-                    Sesi call nemenin ngerjain tugas kuliah kapan pun Nisaa butuh, dengerin curhat dosen, atau sekadar lepas kangen dan capek seharian.
+                  <p className="text-xs sm:text-sm text-[#4A6482] leading-relaxed break-words">
+                    Sesi call nemenin ngerjain tugas kuliah tanpa batas waktu, dengerin curhat capek, dan peluk virtual terhangat buat Nisaa! 🫂
                   </p>
                 </div>
               </div>
@@ -434,14 +434,14 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
               <div className="pt-1">
                 {vouchers.hugClaimed ? (
                   <div className="space-y-2">
-                    <div className="w-full py-2.5 px-4 rounded-full bg-[#FCEEF6] text-[#BE4B9B] font-semibold text-[13px] flex items-center justify-center gap-1.5 border border-[#F3B8DF]/50">
-                      <CheckCircle2 size={15} className="text-[#D870B8]" />
+                    <div className="w-full py-2.5 px-4 rounded-full bg-[#FFF5F8] text-[#E06287] font-semibold text-[13px] flex items-center justify-center gap-1.5 border border-[#FCE7F0]">
+                      <CheckCircle2 size={15} className="text-[#E06287]" />
                       <span>Voucher Sudah Terklaim Khusus Nisaa</span>
                     </div>
                     <motion.button
                       whileTap={{ scale: 0.96 }}
                       onClick={() => openTicketModal('hug')}
-                      className="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#D870B8] to-[#9B6FE4] text-white hover:opacity-95 font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md transition-opacity"
+                      className="w-full py-3 px-5 rounded-full bg-[#1A4D80] text-white hover:bg-[#2B6CB0] font-semibold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md transition-colors"
                     >
                       <Download size={16} />
                       <span>Lihat & Download Tiket Foto PNG</span>
@@ -451,9 +451,9 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
                   <motion.button
                     whileTap={{ scale: 0.95 }}
                     onClick={handleHugClaim}
-                    className="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#D870B8] via-[#E89FD5] to-[#9B6FE4] text-white font-bold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_20px_rgba(216,112,184,0.3)] hover:opacity-95 transition-opacity"
+                    className="w-full py-3 px-5 rounded-full bg-gradient-to-r from-[#2B6CB0] via-[#5DA9FF] to-[#E06287] text-white font-bold text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_20px_rgba(43,108,176,0.28)] hover:opacity-95 transition-opacity"
                   >
-                    <Heart size={16} fill="#FFFFFF" />
+                    <Gift size={16} className="text-[#FCEEF6]" />
                     <span>Klaim & Dapatkan Tiket Foto</span>
                   </motion.button>
                 )}

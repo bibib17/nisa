@@ -90,6 +90,43 @@ function drawFlower(
   ctx.restore();
 }
 
+/**
+ * Draws text with automatic line-wrapping to prevent overflowing ticket bounds
+ */
+function drawWrappedText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  lineHeight: number,
+  maxLines: number = 3
+): number {
+  const words = text.split(' ');
+  let line = '';
+  let currentY = y;
+  let linesCount = 0;
+
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    const testWidth = ctx.measureText(testLine).width;
+    if (testWidth > maxWidth && n > 0) {
+      linesCount++;
+      if (linesCount >= maxLines) {
+        ctx.fillText(line.trim() + '...', x, currentY);
+        return currentY;
+      }
+      ctx.fillText(line.trim(), x, currentY);
+      line = words[n] + ' ';
+      currentY += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line.trim(), x, currentY);
+  return currentY;
+}
+
 export function generateVoucherTicket(data: VoucherData): string {
   const canvas = document.createElement('canvas');
   // High resolution for retina clarity
@@ -151,62 +188,66 @@ export function generateVoucherTicket(data: VoucherData): string {
 
   // 5. Exclusivity Banner Header
   ctx.fillStyle = primaryColor;
-  ctx.font = 'bold 15px system-ui, -apple-system, sans-serif';
-  ctx.fillText('VOUCHER RESMI · EKSKLUSIF KHUSUS NISAA CINTAKUU', mx + 50, my + 44);
+  ctx.font = 'bold 13px system-ui, -apple-system, sans-serif';
+  ctx.fillText('VOUCHER RESMI · EKSKLUSIF KHUSUS NISAA CINTAKUU', mx + 46, my + 38);
 
   // Little decorative flower next to header
-  drawFlower(ctx, mx + 34, my + 38, 7, accentColor);
-  drawFlower(ctx, w - mx - 40, my + 38, 7, accentColor);
+  drawFlower(ctx, mx + 30, my + 34, 6, accentColor);
+  drawFlower(ctx, w - mx - 40, my + 34, 6, accentColor);
 
   ctx.fillStyle = '#6434AD';
-  ctx.font = '600 13px system-ui, -apple-system, sans-serif';
-  ctx.fillText('DITERBITKAN OLEH: ABIB (ABG)', mx + 50, my + 68);
+  ctx.font = '600 12px system-ui, -apple-system, sans-serif';
+  ctx.fillText('DITERBITKAN OLEH: ABIB (ABG)', mx + 46, my + 56);
 
-  // 6. Voucher Title
+  // 6. Voucher Title (Auto-wrapped, limited to 510px so it stays clear of stamp)
   ctx.fillStyle = '#28163E';
-  ctx.font = 'bold 24px system-ui, -apple-system, sans-serif';
-  ctx.fillText(data.title, mx + 50, my + 114);
+  ctx.font = 'bold 20px system-ui, -apple-system, sans-serif';
+  const afterTitleY = drawWrappedText(ctx, data.title, mx + 46, my + 92, 510, 26, 2);
 
-  // 7. Subtitle / Romantic Commitment
+  // 7. Subtitle / Romantic Commitment (Auto-wrapped, limited to 510px)
   ctx.fillStyle = '#5C4478';
-  ctx.font = '15px system-ui, -apple-system, sans-serif';
-  ctx.fillText(data.subtitle, mx + 50, my + 146);
+  ctx.font = '13.5px system-ui, -apple-system, sans-serif';
+  drawWrappedText(ctx, data.subtitle, mx + 46, afterTitleY + 24, 510, 19, 2);
 
   // 8. Dashed Perforated Tear Line
   ctx.strokeStyle = '#D8C7F5';
   ctx.lineWidth = 2;
   ctx.setLineDash([8, 8]);
   ctx.beginPath();
-  ctx.moveTo(mx + 42, my + 178);
-  ctx.lineTo(w - mx - 42, my + 178);
+  ctx.moveTo(mx + 36, my + 180);
+  ctx.lineTo(w - mx - 36, my + 180);
   ctx.stroke();
   ctx.setLineDash([]); // Reset line dash
 
-  // 9. Details Grid (Recipient, Issuer, Validity) with balanced, non-overlapping spacing
-  const col1X = mx + 48;
+  // 9. Details Grid (Recipient, Issuer, Validity)
+  const col1X = mx + 46;
   const col2X = mx + 240;
-  const col3X = mx + 540;
+  const col3X = mx + 530;
 
   ctx.fillStyle = '#8E76A8';
-  ctx.font = 'bold 11.5px system-ui, -apple-system, sans-serif';
+  ctx.font = 'bold 11px system-ui, -apple-system, sans-serif';
   ctx.fillText('PENERIMA RESMI:', col1X, my + 215);
   ctx.fillText('MASA BERLAKU:', col2X, my + 215);
   ctx.fillText('TANGGAL KLAIM:', col3X, my + 215);
 
   ctx.fillStyle = '#28163E';
-  ctx.font = 'bold 15px system-ui, -apple-system, sans-serif';
-  ctx.fillText('Nisaa Cintakuu', col1X, my + 240);
-  ctx.fillText('Seumur Hidup (Anti Expired)', col2X, my + 240);
-  ctx.fillText(data.claimDate, col3X, my + 240);
-
-  // 10. Syarat & Ketentuan Romantis
-  ctx.fillStyle = '#5C4478';
-  ctx.font = 'italic 13px system-ui, -apple-system, sans-serif';
+  ctx.font = 'bold 14.5px system-ui, -apple-system, sans-serif';
+  ctx.fillText('Nisaa Cintakuu', col1X, my + 238);
   ctx.fillText(
-    'Syarat: Cukup kirimkan tiket ini ke WhatsApp Abg (0851-3393-3560). Siap diorderin delivery & ditemenin 24/7! 🌸',
-    mx + 50,
-    my + 288
+    data.type === 'chocolate' ? 'Waktu Ketemu Langsung' : 'Seumur Hidup (Anti Expired)',
+    col2X,
+    my + 238
   );
+  ctx.fillText(data.claimDate, col3X, my + 238);
+
+  // 10. Syarat & Ketentuan Romantis (Auto-wrapped so it stays safely within ticket margins)
+  ctx.fillStyle = '#5C4478';
+  ctx.font = 'italic 12.5px system-ui, -apple-system, sans-serif';
+  const termsText =
+    data.type === 'chocolate'
+      ? 'Syarat: Tunjukkan tiket ini pas kita ketemu langsung nanti. Siap ditraktir cokelat favorit & jalan bareng seharian! 🍫🌸'
+      : 'Syarat: Cukup kirimkan tiket ini ke WhatsApp Abg (0851-3393-3560). Siap diorderin delivery & ditemenin 24/7! 🌸';
+  drawWrappedText(ctx, termsText, mx + 46, my + 282, 680, 18, 2);
 
   // 11. Official Stamp Circle on Right
   const stampX = w - mx - 105;
