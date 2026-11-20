@@ -341,10 +341,6 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
             whileHover={{ scale: 1.01 }}
             className="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-4.5 sm:p-5.5 overflow-hidden border border-[#CFE9FF] shadow-[0_10px_28px_rgba(43,108,176,0.12)]"
           >
-            {/* Cutout notches */}
-            <div className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-r border-[#CFE9FF]" />
-            <div className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-l border-[#CFE9FF]" />
-
             <div className="space-y-3">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <span className="text-[11px] sm:text-[12px] font-bold text-[#2B6CB0] bg-[#F4F9FD] px-2.5 py-0.5 rounded-full border border-[#CFE9FF]">
@@ -404,9 +400,6 @@ export const AbibVoucherSection: React.FC<AbibVoucherSectionProps> = ({
             whileHover={{ scale: 1.01 }}
             className="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-4.5 sm:p-5.5 overflow-hidden border border-[#CFE9FF] shadow-[0_10px_28px_rgba(43,108,176,0.12)]"
           >
-            <div className="absolute top-1/2 -left-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-r border-[#CFE9FF]" />
-            <div className="absolute top-1/2 -right-3 -translate-y-1/2 w-6 h-6 rounded-full bg-[#EAF4FE] border-l border-[#CFE9FF]" />
-
             <div className="space-y-3">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <span className="text-[11px] sm:text-[12px] font-bold text-[#E06287] bg-[#FFF5F8] px-2.5 py-0.5 rounded-full border border-[#FCE7F0]">
